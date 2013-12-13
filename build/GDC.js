@@ -14,7 +14,6 @@
 var GDC__GDC = function () {
         
         var GDC = function () {
-            console.log('hey');
         };
         return GDC;
     }();
