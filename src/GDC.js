@@ -1,5 +1,5 @@
 define(['GDC/_GDC', 'circular'], function(GDC, circular) {
-	'use strict'
+	'use strict';
 
 	while (circular.length) {
 		circular.pop()();
@@ -7,4 +7,4 @@ define(['GDC/_GDC', 'circular'], function(GDC, circular) {
 
 	return GDC;
 
-})
+});
