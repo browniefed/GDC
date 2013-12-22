@@ -4,7 +4,9 @@
 
 var GDC__GDC = function () {
         
-        var GDC = function () {
+        var GDC = function (codemirror, el) {
+            this._codemirror = codemirror;
+            this.codemirror = codemirror.fromTextArea(el);
         };
         return GDC;
     }();
@@ -33,6 +35,7 @@ else if ( typeof define === "function" && define.amd ) {
 
 // ... or as browser global
 else {
+	console.log('global');
 	global.GDC = GDC;
 }
 

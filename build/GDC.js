@@ -1,6 +1,6 @@
 /*
 	
-	GDC - v0.1.0 - 2013-12-12
+	GDC - v0.1.0 - 2013-12-21
 	==============================================================
 	
 	Licensed WTFPL
@@ -13,7 +13,9 @@
 
 var GDC__GDC = function () {
         
-        var GDC = function () {
+        var GDC = function (codemirror, el) {
+            this._codemirror = codemirror;
+            this.codemirror = codemirror.fromTextArea(el);
         };
         return GDC;
     }();
@@ -42,6 +44,7 @@ else if ( typeof define === "function" && define.amd ) {
 
 // ... or as browser global
 else {
+	console.log('global');
 	global.GDC = GDC;
 }
 

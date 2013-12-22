@@ -1,0 +1,1 @@
+var clone = new GDC(document.getElementById('textarea'))

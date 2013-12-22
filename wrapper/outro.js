@@ -13,6 +13,7 @@ else if ( typeof define === "function" && define.amd ) {
 
 // ... or as browser global
 else {
+	console.log('global');
 	global.GDC = GDC;
 }
 

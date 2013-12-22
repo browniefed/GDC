@@ -6,5 +6,4 @@ define(['GDC/_GDC', 'circular'], function(GDC, circular) {
 	}
 
 	return GDC;
-
 });

@@ -1,8 +1,9 @@
-define(['../../js/codemirror/lib/codemirror'], function(codemirror) {
+define([], function() {
 	'use strict';
 
-	var GDC = function() {
-
+	var GDC = function(codemirror, el) {
+		this._codemirror = codemirror;
+		this.codemirror = codemirror.fromTextArea(el);
 	};
 	return GDC;
 });
