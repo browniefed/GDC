@@ -2,8 +2,34 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../../js/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="../../css/gdc.css">
+
 </head>
 <body>
+	<div class="gdc-toolbar">
+		<ul>
+			<li><button id="bold">B</button></li>
+			<li><button id="italic">I</button></li>
+			<li><button id="underline">U</button></li>
+			<li><button id="textcolor">Color</button></li>
+			<li>
+				<select id="heading">
+					<option value="h1">H1</option>
+					<option value="h2">H2</option>
+					<option value="h3">H3</option>
+					<option value="h4">H4</option>
+					<option value="h5">H5</option>					
+				</select>
+			</li>
+
+			<li><button id="ollist">OL</button></li>
+			<li><button id="ullist">UL</button></li>
+
+			<li><button id="img">Image</button></li>
+			<li><button id="table">Table</button></li>
+
+		</ul>
+	</div>
 	<textarea id="textarea" style="width:500px; height: 300px;"></textarea>
 	<script data-main="loader" src="bower_components/requirejs/require.js"></script>
 </body>
