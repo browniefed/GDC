@@ -10,8 +10,8 @@
 	<div class="gdc-filename">
 		<input type="text" name="filename" />
 	</div>
-	<div class="gdc-filestuff">
-		<ul>
+	<div class="gdc-filemenu">
+		<ul class="gdc-filemenulist">
 			<li>File</li>
 			<li>Edit</li>
 			<li>View</li>
@@ -52,7 +52,11 @@
 		</ul>
 	</div>
 </div>
-	<textarea id="textarea" style="width:500px; height: 300px;"></textarea>
+<div class="gdc-textcontainer">
+	<div class="gdc-textmain">
+		<textarea id="textarea" class="gdc-init-textarea"></textarea>
+	</div>
+</div>
 	<script data-main="loader" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
