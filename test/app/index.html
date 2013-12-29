@@ -2,25 +2,36 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../../js/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="../../css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="../../css/gdc.css">
 
 </head>
 <body>
 <div class="gdc-header">
-	<div class="gdc-filename">
-		<input type="text" name="filename" />
-	</div>
-	<div class="gdc-filemenu">
-		<ul class="gdc-filemenulist">
-			<li>File</li>
-			<li>Edit</li>
-			<li>View</li>
-			<li>Insert</li>
-			<li>Format</li>
-			<li>Tools</li>
-			<li>Table</li>
-			<li>Help</li>
-		</ul>
+	<div class="gdc-topbar">
+
+		<div class="gdc-topbar-left">
+			<a class="gdc-home"></a>
+		</div>
+
+		<div class="gdc-topbar-right">
+
+			<input type="text" name="filename" placeholder="Untitled document" />
+
+			<div class="gdc-filemenu">
+				<ul class="gdc-filemenulist">
+					<li>File</li>
+					<li>Edit</li>
+					<li>View</li>
+					<li>Insert</li>
+					<li>Format</li>
+					<li>Tools</li>
+					<li>Table</li>
+					<li>Help</li>
+				</ul>
+			</div>
+
+		</div>
 	</div>
 	<div class="gdc-toolbar">
 		<ul>

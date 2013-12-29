@@ -1,14 +1,55 @@
+.gdc-topbar {
+	width: 100%;
+	display: inline-block;
+	height: 60px;
+	position: relative;
+	padding-left: 40px;
+
+	.gdc-topbar-left {
+		position: absolute;
+		top: 0;
+		left: 0;
+		max-height: 60px;
+		.gdc-home {
+			padding: 30px 20px;
+			background-color: #4285F4;
+			max-width: 40px;
+			display: inline-block;
+		}
+	}
+	.gdc-topbar-right {
+		float: left;
+		clear: none;
+	}
+}
 .gdc-filename {
 	
+	input {
+		border: none;
+		outline: none;
+		display: inline-block;
+		color: #CCC;
+		font-style: italic;
+		font-size: 1.2em;
+	}
 }
 .gdc-filemenu {
+	.gdc-filemenulist {
+		margin: 0;
+		padding: 0;
+	}
 	.gdc-filemenulist li {
 		display: inline-block;
 		list-style: none;
 	}
 }
 .gdc-toolbar {
-	
+	width: 100%;
+	clear: both;
+	ul {
+		margin: 0;
+		padding: 0;
+	}
 	li {
 		display:inline-block;
 		margin-right: 5px;
