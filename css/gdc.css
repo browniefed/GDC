@@ -20,9 +20,12 @@
 .gdc-topbar .gdc-topbar-right {
   float: left;
   clear: none;
+  margin-left: 10px;
 }
-
-.gdc-filename input {
+.gdc-topbar .gdc-topbar-right .gdc-filename {
+  margin-top: 5px;
+}
+.gdc-topbar .gdc-topbar-right .gdc-filename input {
   border: none;
   outline: none;
   display: inline-block;
@@ -30,19 +33,32 @@
   font-style: italic;
   font-size: 1.2em;
 }
-
-.gdc-filemenu .gdc-filemenulist {
+.gdc-topbar .gdc-topbar-right .gdc-filemenu {
+  font-size: .9em;
+  margin-top: 5px;
+  margin-left: -3px;
+}
+.gdc-topbar .gdc-topbar-right .gdc-filemenu .gdc-filemenulist {
   margin: 0;
   padding: 0;
 }
-.gdc-filemenu .gdc-filemenulist li {
+.gdc-topbar .gdc-topbar-right .gdc-filemenu .gdc-filemenulist li {
   display: inline-block;
   list-style: none;
+  margin-left: 5px;
 }
 
 .gdc-toolbar {
   width: 100%;
   clear: both;
+  padding: 5px 0 5px 55px;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #333;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f5f5f5), color-stop(100%, #f1f1f1));
+  background-image: -webkit-linear-gradient(#f5f5f5, #f1f1f1);
+  background-image: -moz-linear-gradient(#f5f5f5, #f1f1f1);
+  background-image: -o-linear-gradient(#f5f5f5, #f1f1f1);
+  background-image: linear-gradient(#f5f5f5, #f1f1f1);
 }
 .gdc-toolbar ul {
   margin: 0;
@@ -71,4 +87,8 @@
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
 }

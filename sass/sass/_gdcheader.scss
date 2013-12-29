@@ -1,3 +1,5 @@
+@import "compass/css3/images";
+
 .gdc-topbar {
 	width: 100%;
 	display: inline-block;
@@ -20,32 +22,42 @@
 	.gdc-topbar-right {
 		float: left;
 		clear: none;
+		margin-left: 10px;
+		.gdc-filename {
+			margin-top: 5px;
+			input {
+				border: none;
+				outline: none;
+				display: inline-block;
+				color: #CCC;
+				font-style: italic;
+				font-size: 1.2em;
+			}
+		}
+		.gdc-filemenu {
+			font-size: .9em;
+			margin-top: 5px;
+			margin-left: -3px;
+			.gdc-filemenulist {
+				margin: 0;
+				padding: 0;
+			}
+			.gdc-filemenulist li {
+				display: inline-block;
+				list-style: none;
+				margin-left: 5px;
+			}
+		}
 	}
 }
-.gdc-filename {
-	
-	input {
-		border: none;
-		outline: none;
-		display: inline-block;
-		color: #CCC;
-		font-style: italic;
-		font-size: 1.2em;
-	}
-}
-.gdc-filemenu {
-	.gdc-filemenulist {
-		margin: 0;
-		padding: 0;
-	}
-	.gdc-filemenulist li {
-		display: inline-block;
-		list-style: none;
-	}
-}
+
 .gdc-toolbar {
 	width: 100%;
 	clear: both;
+	padding: 5px 0 5px 55px;
+	border-top: 1px solid #d9d9d9;
+	border-bottom: 1px solid #333;
+	@include background-image(linear-gradient(#F5F5F5, #F1F1F1));
 	ul {
 		margin: 0;
 		padding: 0;
