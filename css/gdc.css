@@ -55,9 +55,9 @@
   width: 100%;
   clear: both;
   margin-top: -4px;
-  padding: 5px 0 5px 55px;
   border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 1px 0 1px 55px;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f5f5f5), color-stop(100%, #f1f1f1));
   background-image: -webkit-linear-gradient(#f5f5f5, #f1f1f1);
   background-image: -moz-linear-gradient(#f5f5f5, #f1f1f1);
@@ -72,12 +72,24 @@
   display: inline-block;
   margin-right: 5px;
 }
+.gdc-toolbar .gdc-left-separator {
+  border-left: 1px solid #d9d9d9;
+}
+.gdc-toolbar .gdc-right-separator {
+  border-right: 1px solid #d9d9d9;
+}
 .gdc-toolbar .gdc-toolbar-button {
   padding: 3px;
+  min-width: 20px;
   cursor: pointer;
+  text-align: center;
 }
 .gdc-toolbar .gdc-toolbar-button:hover {
-  background-color: #CCC;
+  background-color: #f9f9f9;
+  border: 1px solid #f1f1f1;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
 }
 
 .gdc-textcontainer {
@@ -93,6 +105,9 @@
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
   -moz-box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
+}
+.gdc-textmain .gdc-init-textarea {
+  display: none;
 }
 .gdc-textmain .CodeMirror {
   width: 100%;
