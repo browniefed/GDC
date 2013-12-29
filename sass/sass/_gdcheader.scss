@@ -32,6 +32,9 @@
 				color: #CCC;
 				font-style: italic;
 				font-size: 1.2em;
+				&:hover {
+					background-color: #F1F1F1;
+				}
 			}
 		}
 		.gdc-filemenu {
@@ -54,6 +57,7 @@
 .gdc-toolbar {
 	width: 100%;
 	clear: both;
+	margin-top: -4px;
 	padding: 5px 0 5px 55px;
 	border-top: 1px solid #d9d9d9;
 	border-bottom: 1px solid #333;
@@ -65,5 +69,12 @@
 	li {
 		display:inline-block;
 		margin-right: 5px;
+	}
+	.gdc-toolbar-button {
+		padding: 3px;
+		cursor: pointer;
+		&:hover {
+			background-color: #CCC;
+		}
 	}
 }

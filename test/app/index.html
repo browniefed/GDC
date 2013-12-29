@@ -4,6 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="../../js/codemirror/lib/codemirror.css">
 	<link rel="stylesheet" type="text/css" href="../../css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="../../css/gdc.css">
+	<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 </head>
 <body>
@@ -35,30 +36,69 @@
 	</div>
 	<div class="gdc-toolbar">
 		<ul>
-			<li><button id="bold">B</button></li>
-			<li><button id="italic">I</button></li>
-			<li><button id="underline">U</button></li>
-			<li><button id="textcolor">Color</button></li>
-			<li>
-				<select id="heading">
-					<option value="h1">H1</option>
-					<option value="h2">H2</option>
-					<option value="h3">H3</option>
-					<option value="h4">H4</option>
-					<option value="h5">H5</option>					
+			<li class="gdc-toolbar-button"><i class="fa fa-print"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-undo"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-repeat"></i></li>
+			<li class="gdc-toolbar-dropdown">
+				<select id="zoom" >
+					<option value="25">25%</option>
+					<option value="50">50%</option>
+					<option value="75">75%</option>
+					<option value="80">80%</option>
+					<option value="90">90%</option>
+					<option value="100" selected="selected">100%</option>
+					<option value="fit">Fit<option>
+			
 				</select>
 			</li>
+			<li class="gdc-toolbar-dropdown">
+				<select id="styles">
+					<option value="normal-text">Normal Text</option>
+					<option value="title">Title</option>
+					<option value="h1">Heading 1</option>
+					<option value="h2">Heading 2</option>
+					<option value="h3">Heading 3</option>
+					<option value="h4">Heading 4</option>					
+					<option value="h5">Heading 5</option>					
+				</select>
+			</li>
+			<li class="gdc-toolbar-dropdown">
+				<select id="font">
+					<option value="arial">Arial</option>
+					<option value="times-new-roman">Times New Roamn</option>
+					<option value="calibri">Calibri</option>
+				</select>
+			</li>
+			<li class="gdc-toolbar-dropdown">
+				<select id="font-size">
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11" selected="selected">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>					
+				</select>
+			</li>
+			<li class="gdc-toolbar-button"><i class="fa fa-bold"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-italic"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-underline"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-strikethrough"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-link"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-comment"></i></li>
 
-			<li><button id="ollist">OL</button></li>
-			<li><button id="ullist">UL</button></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-align-lefts"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-align-center"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-align-justify"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-align-right"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-text-height"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-list-ol"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-list-ul"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-outdent"></i></li>
+			<li class="gdc-toolbar-button"><i class="fa fa-indent"></i></li>
 
-			<li><button id="aleft">Left</button></li>
-			<li><button id="acenter">Center</button></li>
-			<li><button id="ajustify">Justify</button></li>
-			<li><button id="aright">Right</button></li>
-
-			<li><button id="img">Image</button></li>
-			<li><button id="table">Table</button></li>
 
 		</ul>
 	</div>

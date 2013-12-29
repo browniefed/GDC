@@ -1,13 +1,18 @@
+@import "compass/css3/box-shadow";
+
+
 .gdc-textcontainer {
     width: 100%;
-    clear: both;
     background-color: #EEE;
+    display: inline-block;
 }
 
 .gdc-textmain {
     width: 800px;
-    margin: 0 auto;
+    margin: 5px auto;
     height: 1000px;
+    @include box-shadow(rgba(0,0,0,.25) 2px 2px 10px);
+
     .CodeMirror {
         width: 100%;
         height: 1000px;

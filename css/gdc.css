@@ -33,6 +33,9 @@
   font-style: italic;
   font-size: 1.2em;
 }
+.gdc-topbar .gdc-topbar-right .gdc-filename input:hover {
+  background-color: #F1F1F1;
+}
 .gdc-topbar .gdc-topbar-right .gdc-filemenu {
   font-size: .9em;
   margin-top: 5px;
@@ -51,6 +54,7 @@
 .gdc-toolbar {
   width: 100%;
   clear: both;
+  margin-top: -4px;
   padding: 5px 0 5px 55px;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #333;
@@ -68,17 +72,27 @@
   display: inline-block;
   margin-right: 5px;
 }
+.gdc-toolbar .gdc-toolbar-button {
+  padding: 3px;
+  cursor: pointer;
+}
+.gdc-toolbar .gdc-toolbar-button:hover {
+  background-color: #CCC;
+}
 
 .gdc-textcontainer {
   width: 100%;
-  clear: both;
   background-color: #EEE;
+  display: inline-block;
 }
 
 .gdc-textmain {
   width: 800px;
-  margin: 0 auto;
+  margin: 5px auto;
   height: 1000px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 2px 2px 10px;
 }
 .gdc-textmain .CodeMirror {
   width: 100%;
