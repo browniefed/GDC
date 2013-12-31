@@ -79,17 +79,40 @@
   border-right: 1px solid #d9d9d9;
 }
 .gdc-toolbar .gdc-toolbar-button {
-  padding: 3px;
-  min-width: 20px;
+  border-style: solid;
+  border-width: 1px;
+  outline: none;
+  color: #333;
   cursor: pointer;
+  padding: 4px;
+  margin: 2px;
+  width: 28px;
+  height: 28px;
+  border-color: transparent;
   text-align: center;
 }
 .gdc-toolbar .gdc-toolbar-button:hover {
-  background-color: #f9f9f9;
-  border: 1px solid #f1f1f1;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
-  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px;
+  background-color: #F8F8F8;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f8f8f8), color-stop(100%, #f1f1f1));
+  background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
+  background-image: -moz-linear-gradient(top, #f8f8f8, #f1f1f1);
+  background-image: -o-linear-gradient(top, #f8f8f8, #f1f1f1);
+  background-image: linear-gradient(top, #f8f8f8, #f1f1f1);
+  border-color: #ccc;
+}
+.gdc-toolbar .gdc-toolbar-button.gdc-toolbar-button-pressed {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px inset;
+  -moz-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 1px inset;
+  background-color: #DDD;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeeeee), color-stop(100%, #e0e0e0));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #e0e0e0);
+  background-image: -moz-linear-gradient(top, #eeeeee, #e0e0e0);
+  background-image: -o-linear-gradient(top, #eeeeee, #e0e0e0);
+  background-image: linear-gradient(top, #eeeeee, #e0e0e0);
 }
 
 .gdc-textcontainer {
