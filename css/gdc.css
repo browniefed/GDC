@@ -68,7 +68,7 @@ ul.gdc-toolbar-dropdown-menu ul {
 
 .gdc-toolbar-dropdown-menu li li:hover ul, .gdc-toolbar-dropdown-menu li li li:hover ul, .gdc-toolbar-dropdown-menu li li li li:hover ul,
 .gdc-toolbar-dropdown-menu li li.onhover ul, .gdc-toolbar-dropdown-menu li li li.onhover ul, .gdc-toolbar-dropdown-menu li li li li.onhover ul {
-  left: 200px;
+  left: 30px;
 }
 
 .gdc-topbar {
