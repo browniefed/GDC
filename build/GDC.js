@@ -1,6 +1,6 @@
 /*
 	
-	GDC - v0.1.0 - 2014-01-02
+	GDC - v0.1.0 - 2014-01-04
 	==============================================================
 	
 	Licensed WTFPL
@@ -11,14 +11,29 @@
 
 
 
-var GDC__GDC = function () {
+var GDC__codemirror = function () {
+        
+        var CodemirrorManager = function (codemirror) {
+            this.codemirror = codemirror;
+        };
+        CodemirrorManager.prototype.getCodemirror = function () {
+            return this.codemirror;
+        };
+        CodemirrorManager.prototype.getSelection = function () {
+        };
+        CodemirrorManager.prototype.fromTextArea = function (el) {
+            this.codemirror.fromTextArea(el);
+        };
+        return CodemirrorManager;
+    }();
+var GDC__GDC = function (CodemirrorManager) {
         
         var GDC = function (codemirror, el) {
-            this._codemirror = codemirror;
-            this.codemirror = codemirror.fromTextArea(el);
+            this._codemirror = new CodemirrorManager(codemirror);
+            this._codemirror.fromTextArea(el);
         };
         return GDC;
-    }();
+    }(GDC__codemirror);
 var circular = function () {
         
         return [];
