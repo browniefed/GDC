@@ -26,14 +26,150 @@ var GDC__codemirror = function () {
         };
         return CodemirrorManager;
     }();
-var GDC__GDC = function (CodemirrorManager) {
+var GDC_utils_create = function () {
+        
+        var create;
+        try {
+            Object.create(null);
+            create = Object.create;
+        } catch (err) {
+            create = function () {
+                var F = function () {
+                };
+                return function (proto, props) {
+                    var obj;
+                    if (proto === null) {
+                        return {};
+                    }
+                    F.prototype = proto;
+                    obj = new F();
+                    if (props) {
+                        Object.defineProperties(obj, props);
+                    }
+                    return obj;
+                };
+            }();
+        }
+        return create;
+    }();
+var GDC_utils_defineProperty = function () {
+        
+        try {
+            Object.defineProperty({}, 'test', { value: 0 });
+            return Object.defineProperty;
+        } catch (err) {
+            return function (obj, prop, desc) {
+                obj[prop] = desc.value;
+            };
+        }
+    }();
+var GDC_utils_defineProperties = function (defineProperty) {
+        
+        try {
+            try {
+                Object.defineProperties({}, { test: { value: 0 } });
+            } catch (err) {
+                throw err;
+            }
+            return Object.defineProperties;
+        } catch (err) {
+            return function (obj, props) {
+                var prop;
+                for (prop in props) {
+                    if (props.hasOwnProperty(prop)) {
+                        defineProperty(obj, prop, props[prop]);
+                    }
+                }
+            };
+        }
+    }(GDC_utils_defineProperty);
+var GDC_prototype_hasFocus = function () {
+    }();
+var GDC_prototype_events_on = function () {
+        
+        return function (eventName, callback) {
+            var self = this, listeners, n;
+            if (typeof eventName === 'object') {
+                listeners = [];
+                for (n in eventName) {
+                    if (eventName.hasOwnProperty(n)) {
+                        listeners[listeners.length] = this.on(n, eventName[n]);
+                    }
+                }
+                return {
+                    cancel: function () {
+                        while (listeners.length) {
+                            listeners.pop().cancel();
+                        }
+                    }
+                };
+            }
+            if (!this._subs[eventName]) {
+                this._subs[eventName] = [callback];
+            } else {
+                this._subs[eventName].push(callback);
+            }
+            return {
+                cancel: function () {
+                    self.off(eventName, callback);
+                }
+            };
+        };
+    }();
+var GDC_prototype_events_off = function () {
+        
+        return function (eventName, callback) {
+            var subscribers, index;
+            if (!callback) {
+                if (!eventName) {
+                    this._subs = {};
+                } else {
+                    this._subs[eventName] = [];
+                }
+            }
+            subscribers = this._subs[eventName];
+            if (subscribers) {
+                index = subscribers.indexOf(callback);
+                if (index !== -1) {
+                    subscribers.splice(index, 1);
+                }
+            }
+        };
+    }();
+var GDC_prototype_events_fire = function () {
+        
+        return function (eventName) {
+            var args, i, len, subscribers = this._subs[eventName];
+            if (!subscribers) {
+                return;
+            }
+            args = Array.prototype.slice.call(arguments, 1);
+            for (i = 0, len = subscribers.length; i < len; i += 1) {
+                subscribers[i].apply(this, args);
+            }
+        };
+    }();
+var GDC_prototype__prototype = function (hasFocus, on, off, fire) {
+        
+        return {
+            hasFocus: hasFocus,
+            on: on,
+            off: off,
+            fire: fire
+        };
+    }(GDC_prototype_hasFocus, GDC_prototype_events_on, GDC_prototype_events_off, GDC_prototype_events_fire);
+var GDC__GDC = function (CodemirrorManager, create, defineProperties, prototype) {
         
         var GDC = function (codemirror, el) {
             this._codemirror = new CodemirrorManager(codemirror);
             this._codemirror.fromTextArea(el);
         };
+        defineProperties(GDC, {
+            prototype: { value: prototype },
+            _subs: { value: create(null) }
+        });
         return GDC;
-    }(GDC__codemirror);
+    }(GDC__codemirror, GDC_utils_create, GDC_utils_defineProperties, GDC_prototype__prototype);
 var circular = function () {
         
         return [];

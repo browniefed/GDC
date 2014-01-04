@@ -1,4 +1,4 @@
-define(['GDC/_codemirror', 'GDC/utils/defineProperties' 'GDC/prototype/_prototype'], function(CodemirrorManager, defineProperties, prototype) {
+define(['GDC/_codemirror', 'GDC/utils/create', 'GDC/utils/defineProperties', 'GDC/prototype/_prototype'], function(CodemirrorManager, create, defineProperties, prototype) {
 	'use strict';
 
 	var GDC = function(codemirror, el) {
@@ -9,7 +9,9 @@ define(['GDC/_codemirror', 'GDC/utils/defineProperties' 'GDC/prototype/_prototyp
 	defineProperties(GDC, {
 		prototype: {
 			value: prototype
-		}
-	})
+		},
+		_subs: { value: create( null ) },
+	});
+
 	return GDC;
 });

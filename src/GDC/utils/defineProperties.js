@@ -1,4 +1,4 @@
-define(['utils/defineProperty'], function ( defineProperty) {
+define(['GDC/utils/defineProperty'], function ( defineProperty) {
 
 	'use strict';
 

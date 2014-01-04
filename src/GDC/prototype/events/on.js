@@ -1,7 +1,8 @@
-define([], function() {
-	"use strict";
+define( function () {
 
-	function on ( eventName, callback ) {
+	'use strict';
+
+	return function ( eventName, callback ) {
 		var self = this, listeners, n;
 
 		// allow mutliple listeners to be bound in one go
@@ -35,5 +36,5 @@ define([], function() {
 			}
 		};
 	};
-	return on;
+
 });

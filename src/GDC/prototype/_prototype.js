@@ -1,4 +1,4 @@
-define(['hasFocus', 'events/on', 'events/off', 'events/fire'], function(hasFocus, on, off, fire) {
+define(['GDC/prototype/hasFocus', 'GDC/prototype/events/on', 'GDC/prototype/events/off', 'GDC/prototype/events/fire'], function(hasFocus, on, off, fire) {
 
 	'use strict';
 
