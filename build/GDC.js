@@ -196,49 +196,102 @@ var GDC_styles_bold = function (rangeBuilder) {
                 }
                 if (!removeStyle) {
                     this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
-                } else {
                 }
             } else {
             }
         };
         return style;
     }(GDC_utils_rangeBuilder);
-var GDC_styles_italic = function () {
+var GDC_styles_italic = function (rangeBuilder) {
         
-        var style = {};
+        var style = {}, removeStyle = false, startRange = {}, endRange = {}, codemirrorInstance;
         style.name = 'italic';
         style.executeStyle = function (selection) {
+            codemirrorInstance = this._codemirror.getCodemirror();
             if (selection) {
-                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                removeStyle = false;
+                var marks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from) || [];
+                marks.concat(this._codemirror.getCodemirror().doc.findMarksAt(selection.to) || []);
+                if (marks.length) {
+                    _(marks).forEach(function (value) {
+                        if (value.className == 'gdc-style-' + style.name) {
+                            startRange = rangeBuilder.fromRange(value.find().from, selection.from);
+                            endRange = rangeBuilder.toRange(value.find().to, selection.to);
+                            value.clear();
+                            codemirrorInstance.doc.markText(startRange.from, startRange.to, { className: 'gdc-style-' + style.name });
+                            codemirrorInstance.doc.markText(endRange.from, endRange.to, { className: 'gdc-style-' + style.name });
+                            removeStyle = true;
+                        }
+                    });
+                }
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                }
             } else {
             }
         };
         return style;
-    }();
-var GDC_styles_underline = function () {
+    }(GDC_utils_rangeBuilder);
+var GDC_styles_underline = function (rangeBuilder) {
         
-        var style = {};
+        var style = {}, removeStyle = false, startRange = {}, endRange = {}, codemirrorInstance;
         style.name = 'underline';
         style.executeStyle = function (selection) {
+            codemirrorInstance = this._codemirror.getCodemirror();
             if (selection) {
-                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                removeStyle = false;
+                var marks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from) || [];
+                marks.concat(this._codemirror.getCodemirror().doc.findMarksAt(selection.to) || []);
+                if (marks.length) {
+                    _(marks).forEach(function (value) {
+                        if (value.className == 'gdc-style-' + style.name) {
+                            startRange = rangeBuilder.fromRange(value.find().from, selection.from);
+                            endRange = rangeBuilder.toRange(value.find().to, selection.to);
+                            value.clear();
+                            codemirrorInstance.doc.markText(startRange.from, startRange.to, { className: 'gdc-style-' + style.name });
+                            codemirrorInstance.doc.markText(endRange.from, endRange.to, { className: 'gdc-style-' + style.name });
+                            removeStyle = true;
+                        }
+                    });
+                }
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                }
             } else {
             }
         };
         return style;
-    }();
-var GDC_styles_strikethrough = function () {
+    }(GDC_utils_rangeBuilder);
+var GDC_styles_strikethrough = function (rangeBuilder) {
         
-        var style = {};
+        var style = {}, removeStyle = false, startRange = {}, endRange = {}, codemirrorInstance;
         style.name = 'strikethrough';
         style.executeStyle = function (selection) {
+            codemirrorInstance = this._codemirror.getCodemirror();
             if (selection) {
-                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                removeStyle = false;
+                var marks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from) || [];
+                marks.concat(this._codemirror.getCodemirror().doc.findMarksAt(selection.to) || []);
+                if (marks.length) {
+                    _(marks).forEach(function (value) {
+                        if (value.className == 'gdc-style-' + style.name) {
+                            startRange = rangeBuilder.fromRange(value.find().from, selection.from);
+                            endRange = rangeBuilder.toRange(value.find().to, selection.to);
+                            value.clear();
+                            codemirrorInstance.doc.markText(startRange.from, startRange.to, { className: 'gdc-style-' + style.name });
+                            codemirrorInstance.doc.markText(endRange.from, endRange.to, { className: 'gdc-style-' + style.name });
+                            removeStyle = true;
+                        }
+                    });
+                }
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                }
             } else {
             }
         };
         return style;
-    }();
+    }(GDC_utils_rangeBuilder);
 var GDC_styles__styles = function (styleManager, bold, italic, underline, strikethrough) {
         
         var styles = {
