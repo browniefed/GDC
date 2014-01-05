@@ -16,7 +16,7 @@ define(['GDC/_currentStyles', 'GDC/styles/bold','GDC/styles/italic','GDC/styles/
 			styleManager.addStyle(style, styles[style]);
 			return;
 		}
-		styles[style].executeStyle(selection);
+		styles[style].executeStyle.call(this, selection);
 	};
 
 

@@ -7,7 +7,7 @@ define([], function() {
 	};
 
 	CodemirrorManager.prototype.getCodemirror = function() {
-		return this.codemirror;
+		return this._codemirror;
 	};
 
 	CodemirrorManager.prototype.getSelection = function() {
@@ -15,7 +15,7 @@ define([], function() {
 	};
 
 	CodemirrorManager.prototype.fromTextArea = function(el) {
-		this.codemirror.fromTextArea(el);
+		this._codemirror = this.codemirror.fromTextArea(el);
 	};
 
 

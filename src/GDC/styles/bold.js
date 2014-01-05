@@ -6,6 +6,8 @@ define([], function() {
 
 	style.name = 'bold';
 	style.executeStyle = function(selection) {
+
+		console.log(this);
 		if (selection) {
 
 		} else {

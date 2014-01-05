@@ -160,6 +160,7 @@ var GDC_styles_bold = function () {
         var style = {};
         style.name = 'bold';
         style.executeStyle = function (selection) {
+            console.log(this);
             if (selection) {
             } else {
             }
@@ -213,7 +214,7 @@ var GDC_styles__styles = function (styleManager, bold, italic, underline, strike
                 styleManager.addStyle(style, styles[style]);
                 return;
             }
-            styles[style].executeStyle(selection);
+            styles[style].executeStyle.call(this, selection);
         };
         return styleApplier;
     }(GDC__currentStyles, GDC_styles_bold, GDC_styles_italic, GDC_styles_underline, GDC_styles_strikethrough);
@@ -227,12 +228,12 @@ var GDC__codemirror = function () {
             this.codemirror = codemirror;
         };
         CodemirrorManager.prototype.getCodemirror = function () {
-            return this.codemirror;
+            return this._codemirror;
         };
         CodemirrorManager.prototype.getSelection = function () {
         };
         CodemirrorManager.prototype.fromTextArea = function (el) {
-            this.codemirror.fromTextArea(el);
+            this._codemirror = this.codemirror.fromTextArea(el);
         };
         return CodemirrorManager;
     }();
@@ -243,7 +244,7 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             gdc._codemirror = new CodemirrorManager(options.codemirror);
             gdc._codemirror.fromTextArea(options.el);
             gdc.on('bold', function () {
-                styleApplier.applyStyle('bold');
+                styleApplier.applyStyle.call(gdc, 'bold', {});
             });
             gdc.on('italic', function () {
                 styleApplier.applyStyle('italic');

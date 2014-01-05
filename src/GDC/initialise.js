@@ -15,7 +15,7 @@ define(['GDC/_codemirror',
 		gdc._codemirror.fromTextArea(options.el);
 
 		gdc.on('bold', function() {
-			styleApplier.applyStyle('bold');
+			styleApplier.applyStyle.call(gdc, 'bold', {});
 		});
 		gdc.on('italic', function() {
 			styleApplier.applyStyle('italic');
