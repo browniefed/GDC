@@ -1,4 +1,4 @@
-define(['../_currentStyles', 'bold','italic','underline','strikethrough'], function(styleManager, bold, italic, underline, strikethrough) {
+define(['GDC/_currentStyles', 'GDC/styles/bold','GDC/styles/italic','GDC/styles/underline','GDC/styles/strikethrough'], function(styleManager, bold, italic, underline, strikethrough) {
 
 	"use strict";
 
@@ -18,6 +18,7 @@ define(['../_currentStyles', 'bold','italic','underline','strikethrough'], funct
 		}
 		styles[style].executeStyle(selection);
 	};
+
 
 	return styleApplier;
 });

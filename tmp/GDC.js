@@ -149,18 +149,102 @@ var GDC_prototype__prototype = function (hasFocus, on, off, fire) {
             fire: fire
         };
     }(GDC_prototype_hasFocus, GDC_prototype_events_on, GDC_prototype_events_off, GDC_prototype_events_fire);
-var GDC__GDC = function (CodemirrorManager, create, defineProperties, prototype) {
+var GDC__currentStyles = function () {
+        
+        var currentStyles = {};
+        return {
+            addStyle: function (name, style) {
+                currentStyles[name] = style;
+            },
+            removeStyle: function (name) {
+                currentStyles[name] = null;
+            }
+        };
+    }();
+var GDC_styles_bold = function () {
+        
+        var style = {};
+        style.name = 'bold';
+        style.executeStyle = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return style;
+    }();
+var GDC_styles_italic = function () {
+        
+        var style = {};
+        style.name = 'italic';
+        style.executeStyle = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return style;
+    }();
+var GDC_styles_underline = function () {
+        
+        var style = {};
+        style.name = 'underline';
+        style.executeStyle = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return style;
+    }();
+var GDC_styles_strikethrough = function () {
+        
+        var style = {};
+        style.name = 'strikethrough';
+        style.executeStyle = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return style;
+    }();
+var GDC_styles__styles = function (styleManager, bold, italic, underline, strikethrough) {
+        
+        var styles = {
+                bold: bold,
+                italic: italic,
+                underline: underline,
+                strikethrough: strikethrough
+            };
+        var styleApplier = {};
+        styleApplier.applyStyle = function (style, selection) {
+            if (!selection) {
+                styleManager.addStyle(style, styles[style]);
+                return;
+            }
+            styles[style].executeStyle(selection);
+        };
+        return styleApplier;
+    }(GDC__currentStyles, GDC_styles_bold, GDC_styles_italic, GDC_styles_underline, GDC_styles_strikethrough);
+var GDC__GDC = function (CodemirrorManager, create, defineProperties, prototype, styleApplier) {
         
         var GDC = function (codemirror, el) {
             this._codemirror = new CodemirrorManager(codemirror);
             this._codemirror.fromTextArea(el);
+            this._subs = {};
+            this.on('bold', function () {
+                styleApplier.applyStyle('bold');
+            });
+            this.on('italic', function () {
+                styleApplier.applyStyle('italic');
+            });
+            this.on('strikethrough', function () {
+                styleApplier.applyStyle('strikethrough');
+            });
+            this.on('underline', function () {
+                styleApplier.applyStyle('underline');
+            });
         };
-        defineProperties(GDC, {
-            prototype: { value: prototype },
-            _subs: { value: create(null) }
-        });
+        defineProperties(GDC, { prototype: { value: prototype } });
         return GDC;
-    }(GDC__codemirror, GDC_utils_create, GDC_utils_defineProperties, GDC_prototype__prototype);
+    }(GDC__codemirror, GDC_utils_create, GDC_utils_defineProperties, GDC_prototype__prototype, GDC_styles__styles);
 var circular = function () {
         
         return [];
