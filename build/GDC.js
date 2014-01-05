@@ -11,21 +11,6 @@
 
 
 
-var GDC__codemirror = function () {
-        
-        var CodemirrorManager = function (codemirror) {
-            this.codemirror = codemirror;
-        };
-        CodemirrorManager.prototype.getCodemirror = function () {
-            return this.codemirror;
-        };
-        CodemirrorManager.prototype.getSelection = function () {
-        };
-        CodemirrorManager.prototype.fromTextArea = function (el) {
-            this.codemirror.fromTextArea(el);
-        };
-        return CodemirrorManager;
-    }();
 var GDC_utils_create = function () {
         
         var create;
@@ -236,10 +221,27 @@ var circular = function () {
         
         return [];
     }();
-var GDC_initialise = function (defineProperties, styleApplier) {
+var GDC__codemirror = function () {
         
-        return function (gdc) {
+        var CodemirrorManager = function (codemirror) {
+            this.codemirror = codemirror;
+        };
+        CodemirrorManager.prototype.getCodemirror = function () {
+            return this.codemirror;
+        };
+        CodemirrorManager.prototype.getSelection = function () {
+        };
+        CodemirrorManager.prototype.fromTextArea = function (el) {
+            this.codemirror.fromTextArea(el);
+        };
+        return CodemirrorManager;
+    }();
+var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier) {
+        
+        return function (gdc, options) {
             defineProperties(gdc, { _subs: { value: {} } });
+            gdc._codemirror = new CodemirrorManager(options.codemirror);
+            gdc._codemirror.fromTextArea(options.el);
             gdc.on('bold', function () {
                 styleApplier.applyStyle('bold');
             });
@@ -253,13 +255,14 @@ var GDC_initialise = function (defineProperties, styleApplier) {
                 styleApplier.applyStyle('underline');
             });
         };
-    }(GDC_utils_defineProperties, GDC_styles__styles);
-var GDC__GDC = function (CodemirrorManager, create, defineProperties, prototype, styleApplier, circular, initialise) {
+    }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles);
+var GDC__GDC = function (create, defineProperties, prototype, styleApplier, circular, initialise) {
         
         var GDC = function (codemirror, el) {
-            initialise(this);
-            this._codemirror = new CodemirrorManager(codemirror);
-            this._codemirror.fromTextArea(el);
+            initialise(this, {
+                codemirror: codemirror,
+                el: el
+            });
         };
         defineProperties(GDC, {
             prototype: { value: prototype },
@@ -268,7 +271,7 @@ var GDC__GDC = function (CodemirrorManager, create, defineProperties, prototype,
         GDC.prototype.constructor = GDC;
         circular.GDC = GDC;
         return GDC;
-    }(GDC__codemirror, GDC_utils_create, GDC_utils_defineProperties, GDC_prototype__prototype, GDC_styles__styles, circular, GDC_initialise);
+    }(GDC_utils_create, GDC_utils_defineProperties, GDC_prototype__prototype, GDC_styles__styles, circular, GDC_initialise);
 var GDC = function (GDC, circular) {
         
         while (circular.length) {

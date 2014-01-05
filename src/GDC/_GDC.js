@@ -1,4 +1,4 @@
-define(['GDC/_codemirror', 
+define([
 		'GDC/utils/create', 
 		'GDC/utils/defineProperties', 
 		'GDC/prototype/_prototype', 
@@ -6,13 +6,11 @@ define(['GDC/_codemirror',
 		'circular',
 		'GDC/initialise'
 		], 
-	function(CodemirrorManager, create, defineProperties, prototype, styleApplier, circular, initialise) {
+	function(create, defineProperties, prototype, styleApplier, circular, initialise) {
 	'use strict';
 
 	var GDC = function(codemirror, el) {
-		initialise(this);
-		this._codemirror = new CodemirrorManager(codemirror);
-		this._codemirror.fromTextArea(el);
+		initialise(this, {codemirror: codemirror, el: el});
 	};
 
 	defineProperties(GDC, {

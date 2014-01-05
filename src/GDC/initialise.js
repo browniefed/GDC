@@ -1,14 +1,18 @@
-define(['GDC/utils/defineProperties',
-		'GDC/styles/_styles'], function(defineProperties, styleApplier) {
+define(['GDC/_codemirror',
+		'GDC/utils/defineProperties',
+		'GDC/styles/_styles'], function(CodemirrorManager, defineProperties, styleApplier) {
 
 	"use strict";
 
-	return function(gdc) {
+	return function(gdc, options) {
 		defineProperties(gdc, {
 			_subs: {
 				value: {}
 			}
 		});
+
+		gdc._codemirror = new CodemirrorManager(options.codemirror);
+		gdc._codemirror.fromTextArea(options.el);
 
 		gdc.on('bold', function() {
 			styleApplier.applyStyle('bold');
