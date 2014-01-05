@@ -180,9 +180,10 @@ var GDC_styles_bold = function (rangeBuilder) {
             codemirrorInstance = this._codemirror.getCodemirror();
             if (selection) {
                 removeStyle = false;
-                var startMarks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from), endMarks = this._codemirror.getCodemirror().doc.findMarksAt(selection.to);
-                if (startMarks.length) {
-                    _(startMarks).forEach(function (value) {
+                var marks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from) || [];
+                marks.concat(this._codemirror.getCodemirror().doc.findMarksAt(selection.to) || []);
+                if (marks.length) {
+                    _(marks).forEach(function (value) {
                         if (value.className == 'gdc-style-' + style.name) {
                             startRange = rangeBuilder.fromRange(value.find().from, selection.from);
                             endRange = rangeBuilder.toRange(value.find().to, selection.to);
