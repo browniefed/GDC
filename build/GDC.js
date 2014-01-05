@@ -173,6 +173,7 @@ var GDC_styles_italic = function () {
         style.name = 'italic';
         style.executeStyle = function (selection) {
             if (selection) {
+                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
             } else {
             }
         };
@@ -184,6 +185,7 @@ var GDC_styles_underline = function () {
         style.name = 'underline';
         style.executeStyle = function (selection) {
             if (selection) {
+                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
             } else {
             }
         };
@@ -195,6 +197,7 @@ var GDC_styles_strikethrough = function () {
         style.name = 'strikethrough';
         style.executeStyle = function (selection) {
             if (selection) {
+                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
             } else {
             }
         };
@@ -251,13 +254,13 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
                 styleApplier.applyStyle.call(gdc, 'bold', {});
             });
             gdc.on('italic', function () {
-                styleApplier.applyStyle('italic');
+                styleApplier.applyStyle.call(gdc, 'italic', {});
             });
             gdc.on('strikethrough', function () {
-                styleApplier.applyStyle('strikethrough');
+                styleApplier.applyStyle.call(gdc, 'strikethrough', {});
             });
             gdc.on('underline', function () {
-                styleApplier.applyStyle('underline');
+                styleApplier.applyStyle.call(gdc, 'underline', {});
             });
         };
     }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles);

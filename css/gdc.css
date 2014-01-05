@@ -233,3 +233,15 @@ body {
 .gdc-style-bold {
   font-weight: bold;
 }
+
+.gdc-style-strikethrough {
+  text-decoration: line-through;
+}
+
+.gdc-style-underline {
+  text-decoration: underline;
+}
+
+.gdc-style-italic {
+  font-style: italic;
+}

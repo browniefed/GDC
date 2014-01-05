@@ -18,13 +18,13 @@ define(['GDC/_codemirror',
 			styleApplier.applyStyle.call(gdc, 'bold', {});
 		});
 		gdc.on('italic', function() {
-			styleApplier.applyStyle('italic');
+			styleApplier.applyStyle.call(gdc, 'italic', {});
 		});
 		gdc.on('strikethrough', function() {
-			styleApplier.applyStyle('strikethrough');
+			styleApplier.applyStyle.call(gdc, 'strikethrough', {});
 		});
 		gdc.on('underline', function() {
-			styleApplier.applyStyle('underline');
+			styleApplier.applyStyle.call(gdc, 'underline', {});
 		});
 	};
 });
