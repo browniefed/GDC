@@ -1,4 +1,6 @@
 define(['../../build/GDC', '../../js/codemirror/lib/codemirror'], function(GDC, codemirror) {
 	var clone = new GDC(codemirror, document.getElementById('textarea'));
-	clone.fire('bold');
+	setTimeout(function() {
+		clone.fire('bold');
+	},3000)
 });

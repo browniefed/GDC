@@ -229,3 +229,7 @@ ul.gdc-toolbar-dropdown-menu ul {
 body {
   font-size: 16px;
 }
+
+.gdc-style-bold {
+  font-weight: bold;
+}

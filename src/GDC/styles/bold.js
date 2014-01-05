@@ -6,10 +6,8 @@ define([], function() {
 
 	style.name = 'bold';
 	style.executeStyle = function(selection) {
-
-		console.log(this);
 		if (selection) {
-
+			this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, {className: 'gdc-style-' + style.name});
 		} else {
 
 		}

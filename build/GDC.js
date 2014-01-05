@@ -160,8 +160,8 @@ var GDC_styles_bold = function () {
         var style = {};
         style.name = 'bold';
         style.executeStyle = function (selection) {
-            console.log(this);
             if (selection) {
+                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
             } else {
             }
         };
@@ -208,13 +208,17 @@ var GDC_styles__styles = function (styleManager, bold, italic, underline, strike
                 underline: underline,
                 strikethrough: strikethrough
             };
-        var styleApplier = {};
-        styleApplier.applyStyle = function (style, selection) {
-            if (!selection) {
+        var styleApplier = {}, isSelected = false, selection = {};
+        styleApplier.applyStyle = function (style) {
+            isSelected = this._codemirror.getCodemirror().somethingSelected();
+            if (!isSelected) {
                 styleManager.addStyle(style, styles[style]);
                 return;
+            } else {
+                selection.from = this._codemirror.getCodemirror().doc.getCursor(true);
+                selection.to = this._codemirror.getCodemirror().doc.getCursor(false);
+                styles[style].executeStyle.call(this, selection);
             }
-            styles[style].executeStyle.call(this, selection);
         };
         return styleApplier;
     }(GDC__currentStyles, GDC_styles_bold, GDC_styles_italic, GDC_styles_underline, GDC_styles_strikethrough);
