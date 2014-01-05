@@ -146,18 +146,53 @@ var GDC__currentStyles = function () {
             }
         };
     }();
-var GDC_styles_bold = function () {
+var GDC_utils_rangeBuilder = function () {
         
-        var style = {};
+        return {
+            fromRange: function (from, to) {
+                return {
+                    from: _.clone(from),
+                    to: _.clone(to)
+                };
+            },
+            toRange: function (to, from) {
+                return {
+                    from: _.clone(from),
+                    to: _.clone(to)
+                };
+            }
+        };
+    }();
+var GDC_styles_bold = function (rangeBuilder) {
+        
+        var style = {}, removeStyle = false, startRange = {}, endRange = {}, codemirrorInstance;
         style.name = 'bold';
         style.executeStyle = function (selection) {
+            codemirrorInstance = this._codemirror.getCodemirror();
             if (selection) {
-                this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                removeStyle = false;
+                var startMarks = this._codemirror.getCodemirror().doc.findMarksAt(selection.from), endMarks = this._codemirror.getCodemirror().doc.findMarksAt(selection.to);
+                if (startMarks.length) {
+                    _(startMarks).forEach(function (value) {
+                        if (value.className == 'gdc-style-' + style.name) {
+                            startRange = rangeBuilder.fromRange(value.find().from, selection.from);
+                            endRange = rangeBuilder.toRange(value.find().to, selection.to);
+                            value.clear();
+                            codemirrorInstance.doc.markText(startRange.from, startRange.to, { className: 'gdc-style-' + style.name });
+                            codemirrorInstance.doc.markText(endRange.from, endRange.to, { className: 'gdc-style-' + style.name });
+                            removeStyle = true;
+                        }
+                    });
+                }
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                } else {
+                }
             } else {
             }
         };
         return style;
-    }();
+    }(GDC_utils_rangeBuilder);
 var GDC_styles_italic = function () {
         
         var style = {};
