@@ -14,7 +14,6 @@ define(['GDC/utils/defineProperty'], function ( defineProperty) {
 	} catch ( err ) {
 		return function ( obj, props ) {
 			var prop;
-
 			for ( prop in props ) {
 				if ( props.hasOwnProperty( prop ) ) {
 					defineProperty( obj, prop, props[ prop ] );
