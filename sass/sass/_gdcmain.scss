@@ -20,9 +20,11 @@
         height: 1000px;
     }
     .CodeMirror-linewidget > table td {
-        height: 32px;
+        min-height: 32px;
         padding: 4px;
         .CodeMirror {
+            min-height: 40px;
+            background-color: transparent;
             height: 40px;
         }
     }
