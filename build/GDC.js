@@ -328,18 +328,46 @@ var GDC_insertions_link = function () {
         };
         return insert;
     }();
-var GDC_insertions_table = function () {
+var GDC_utils_tableFuncs = function () {
         
-        var insert = {}, codeMirrorInstance;
+        return {
+            tableCreate: function (cellsX, cellsY) {
+                var tbl = document.createElement('table');
+                tbl.style.width = '100%';
+                tbl.style.height = '100px';
+                tbl.style.border = '1px solid #000';
+                for (var i = 0; i < 3; i++) {
+                    var tr = tbl.insertRow();
+                    for (var j = 0; j < 2; j++) {
+                        var td = tr.insertCell();
+                        td.style.border = '1px solid #000';
+                        td.appendChild(document.createTextNode(' '));
+                    }
+                }
+                return tbl;
+            }
+        };
+    }();
+var GDC_insertions_table = function (tableUtils) {
+        
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
         insert.name = 'table';
         insert.insertWidget = function (selection) {
             codeMirrorInstance = this._codemirror.getCodemirror();
-            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableEle = document.createElement('div');
-            tableEle.className = 'gdc-table-widget';
-            codeMirrorInstance.addLineWidget(currentLine, tableEle, { handleMouseEvents: true });
+            codeMirrorConstructor = this._codemirror.codemirror;
+            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableEle = tableUtils.tableCreate();
+            var tableWidget = codeMirrorInstance.addLineWidget(currentLine, tableEle, { handleMouseEvents: true });
+            var tds = tableWidget.node.querySelectorAll('td');
+            _(tds).forEach(function (td, index) {
+                var options = {};
+                if (index == 0) {
+                    options.autoFocus = true;
+                }
+                var codeMirrorTableCell = new codeMirrorConstructor(td, options);
+            });
         };
         return insert;
-    }();
+    }(GDC_utils_tableFuncs);
 var GDC_insertions__widgetInserter = function (comment, image, link, table) {
         
         var widgets = {

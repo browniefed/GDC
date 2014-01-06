@@ -217,9 +217,16 @@ ul.gdc-toolbar-dropdown-menu ul {
 .gdc-textmain .gdc-init-textarea {
   display: none;
 }
-.gdc-textmain .CodeMirror {
+.gdc-textmain > .CodeMirror {
   width: 100%;
   height: 1000px;
+}
+.gdc-textmain .CodeMirror-linewidget > table td {
+  height: 32px;
+  padding: 4px;
+}
+.gdc-textmain .CodeMirror-linewidget > table td .CodeMirror {
+  height: 40px;
 }
 
 * {

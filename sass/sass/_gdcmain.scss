@@ -15,9 +15,16 @@
     .gdc-init-textarea {
         display: none;
     }
-    .CodeMirror {
+    > .CodeMirror {
         width: 100%;
         height: 1000px;
+    }
+    .CodeMirror-linewidget > table td {
+        height: 32px;
+        padding: 4px;
+        .CodeMirror {
+            height: 40px;
+        }
     }
 }
 

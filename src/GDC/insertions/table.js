@@ -1,20 +1,31 @@
-define([], function() {
+define(['GDC/utils/tableFuncs'], function(tableUtils) {
 
 	"use strict";
 
 	var insert = {},
-		codeMirrorInstance;
+		codeMirrorInstance,
+		codeMirrorConstructor;
 
 	insert.name = 'table';
 
 	insert.insertWidget = function(selection) {
 		codeMirrorInstance = this._codemirror.getCodemirror();
+		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
-			tableEle = document.createElement('div');
-			tableEle.className = 'gdc-table-widget';
+			tableEle = tableUtils.tableCreate();
+			
 
-		codeMirrorInstance.addLineWidget(currentLine, tableEle, {handleMouseEvents: true});
-
+		var tableWidget = codeMirrorInstance.addLineWidget(currentLine, tableEle, {handleMouseEvents: true});
+		
+		var tds = tableWidget.node.querySelectorAll('td');
+		_(tds).forEach(function(td, index) {
+			var options = {};
+			
+			if (index == 0) {
+				options.autoFocus = true;
+			}
+			var codeMirrorTableCell = new codeMirrorConstructor(td, options);
+		})
 	};
 
 	return insert;
