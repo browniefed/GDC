@@ -12,7 +12,9 @@ define(['GDC/_codemirror',
 			}
 		});
 
-		gdc._codemirror = new CodemirrorManager(options.codemirror);
+		gdc._codemirror = new CodemirrorManager(options.codemirror, {
+			lineWrapping: true
+		});
 		gdc._codemirror.fromTextArea(options.el);
 
 		gdc.on('bold', function() {
@@ -31,5 +33,9 @@ define(['GDC/_codemirror',
 		gdc.on('insert-table', function() {
 			widgetInserter.insert.call(gdc, 'table');
 		});
+
+		gdc.on('insert-image', function() {
+			widgetInserter.insert.call(gdc, 'image');
+		})
 	};
 });

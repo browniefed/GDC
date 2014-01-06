@@ -8,7 +8,7 @@ define(['GDC/utils/tableFuncs'], function(tableUtils) {
 
 	insert.name = 'table';
 
-	insert.insertWidget = function(selection) {
+	insert.insertWidget = function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
@@ -20,7 +20,7 @@ define(['GDC/utils/tableFuncs'], function(tableUtils) {
 		var tds = tableWidget.node.querySelectorAll('td');
 		_(tds).forEach(function(td, index) {
 			var options = {};
-			
+
 			if (index == 0) {
 				options.autoFocus = true;
 			}

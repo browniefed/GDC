@@ -299,12 +299,16 @@ var GDC_insertions_comment = function () {
     }();
 var GDC_insertions_images = function () {
         
-        var insert = {};
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
         insert.name = 'image';
         insert.insertWidget = function (selection) {
-            if (selection) {
-            } else {
-            }
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            codeMirrorConstructor = this._codemirror.codemirror;
+            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false);
+            var image = new Image();
+            image.src = 'morgan.png';
+            image.style.display = 'inline';
+            codeMirrorInstance.markText(currentLine, endLine, { replacedWith: image });
         };
         return insert;
     }();
@@ -343,7 +347,7 @@ var GDC_insertions_table = function (tableUtils) {
         
         var insert = {}, codeMirrorInstance, codeMirrorConstructor;
         insert.name = 'table';
-        insert.insertWidget = function (selection) {
+        insert.insertWidget = function () {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
             var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableEle = tableUtils.tableCreate();
@@ -377,7 +381,7 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
         
         return function (gdc, options) {
             defineProperties(gdc, { _subs: { value: {} } });
-            gdc._codemirror = new CodemirrorManager(options.codemirror);
+            gdc._codemirror = new CodemirrorManager(options.codemirror, { lineWrapping: true });
             gdc._codemirror.fromTextArea(options.el);
             gdc.on('bold', function () {
                 styleApplier.applyStyle.call(gdc, 'bold', {});
@@ -393,6 +397,9 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             });
             gdc.on('insert-table', function () {
                 widgetInserter.insert.call(gdc, 'table');
+            });
+            gdc.on('insert-image', function () {
+                widgetInserter.insert.call(gdc, 'image');
             });
         };
     }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles, GDC_insertions__widgetInserter);
