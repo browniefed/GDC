@@ -28,6 +28,16 @@ define(['GDC/utils/tableFuncs'], function(tableUtils) {
 		this.tableCells = tdCMs;
 	}
 
+	Table.prototype.destroy = function() {
+		this.widget.clear();
+	}
+
+	Table.prototype.addStyle = function(style) {
+		_.(this.tableCells).each(function(cell) {
+			cell.fire(style);
+		})
+	}
+
 	insert.insertWidget = function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
