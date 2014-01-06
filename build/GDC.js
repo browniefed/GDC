@@ -340,9 +340,11 @@ var GDC_utils_tableFuncs = function () {
                 tbl.style.width = '100%';
                 tbl.style.height = '100px';
                 tbl.style.border = '1px solid #000';
-                for (var i = 0; i < 3; i++) {
+                cellsX = cellsX || 2;
+                cellsY = cellsY || 3;
+                for (var i = 0; i < cellsY; i++) {
                     var tr = tbl.insertRow();
-                    for (var j = 0; j < 2; j++) {
+                    for (var j = 0; j < cellsX; j++) {
                         var td = tr.insertCell();
                         td.style.border = '1px solid #000';
                         td.appendChild(document.createTextNode(' '));
@@ -376,7 +378,7 @@ var GDC_insertions_table = function (tableUtils) {
         insert.insertWidget = function () {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(3, 2);
+            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(2, 5);
             tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
             tableInstance.initTableCells();
             return tableInstance;
