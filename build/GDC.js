@@ -295,7 +295,66 @@ var GDC__codemirror = function () {
         };
         return CodemirrorManager;
     }();
-var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier) {
+var GDC_insertions_comment = function () {
+        
+        var insert = {};
+        insert.name = 'comment';
+        insert.insertWidget = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return insert;
+    }();
+var GDC_insertions_images = function () {
+        
+        var insert = {};
+        insert.name = 'image';
+        insert.insertWidget = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return insert;
+    }();
+var GDC_insertions_link = function () {
+        
+        var insert = {};
+        insert.name = 'link';
+        insert.insertWidget = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return insert;
+    }();
+var GDC_insertions_table = function () {
+        
+        var insert = {}, codeMirrorInstance;
+        insert.name = 'table';
+        insert.insertWidget = function (selection) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableEle = document.createElement('div');
+            tableEle.className = 'gdc-table-widget';
+            codeMirrorInstance.addLineWidget(currentLine, tableEle, { handleMouseEvents: true });
+        };
+        return insert;
+    }();
+var GDC_insertions__widgetInserter = function (comment, image, link, table) {
+        
+        var widgets = {
+                comment: comment,
+                image: image,
+                link: link,
+                table: table
+            };
+        return {
+            insert: function (widget) {
+                widgets[widget].insertWidget.call(this);
+            }
+        };
+    }(GDC_insertions_comment, GDC_insertions_images, GDC_insertions_link, GDC_insertions_table);
+var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier, widgetInserter) {
         
         return function (gdc, options) {
             defineProperties(gdc, { _subs: { value: {} } });
@@ -313,8 +372,11 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             gdc.on('underline', function () {
                 styleApplier.applyStyle.call(gdc, 'underline', {});
             });
+            gdc.on('insert-table', function () {
+                widgetInserter.insert.call(gdc, 'table');
+            });
         };
-    }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles);
+    }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles, GDC_insertions__widgetInserter);
 var GDC__GDC = function (create, defineProperties, prototype, styleApplier, circular, initialise) {
         
         var GDC = function (codemirror, el) {

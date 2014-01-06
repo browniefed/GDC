@@ -4,7 +4,8 @@ define(['../../build/GDC', '../../js/codemirror/lib/codemirror'], function(GDC, 
 	var boldButton = document.getElementById('gdc-bold-button'),
 		italicButton = document.getElementById('gdc-italic-button'),
 		strikethroughButton = document.getElementById('gdc-strikethrough-button'),
-		underlineButton = document.getElementById('gdc-underline-button');
+		underlineButton = document.getElementById('gdc-underline-button'),
+		tableButton = document.getElementById('gdc-table-button');
 
 	boldButton.addEventListener('click', function() {
 		clone.fire('bold');
@@ -18,5 +19,9 @@ define(['../../build/GDC', '../../js/codemirror/lib/codemirror'], function(GDC, 
 	}, false);
 	underlineButton.addEventListener('click', function() {
 		clone.fire('underline');
+	}, false);
+
+	tableButton.addEventListener('click', function() {
+		clone.fire('insert-table');
 	}, false);
 });

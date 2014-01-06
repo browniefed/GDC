@@ -1,6 +1,7 @@
 define(['GDC/_codemirror',
 		'GDC/utils/defineProperties',
-		'GDC/styles/_styles'], function(CodemirrorManager, defineProperties, styleApplier) {
+		'GDC/styles/_styles',
+		'GDC/insertions/_widgetInserter'], function(CodemirrorManager, defineProperties, styleApplier, widgetInserter) {
 
 	"use strict";
 
@@ -25,6 +26,10 @@ define(['GDC/_codemirror',
 		});
 		gdc.on('underline', function() {
 			styleApplier.applyStyle.call(gdc, 'underline', {});
+		});
+
+		gdc.on('insert-table', function() {
+			widgetInserter.insert.call(gdc, 'table');
 		});
 	};
 });
