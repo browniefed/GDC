@@ -376,9 +376,9 @@ var GDC_insertions_table = function (tableUtils) {
         insert.insertWidget = function () {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false), tableInstance = new Table(3, 2);
-            var span = document.createElement('span');
-            codeMirrorInstance.markText(currentLine, endLine, { replacedWith: span });
+            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(3, 2);
+            tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
+            tableInstance.initTableCells();
             return tableInstance;
         };
         return insert;
