@@ -10,11 +10,15 @@ define(['GDC/insertions/comment',
 		image: image,
 		link: link,
 		table: table
-	};
+	},
+	createdWidgets = [];
 
 	return {
 		insert: function(widget) {
-			widgets[widget].insertWidget.call(this);
+			createdWidgets.push(widgets[widget].insertWidget.call(this));
+		}, 
+		getCreatedWidgets: function() {
+			return createdWidgets;
 		}
 	};
 

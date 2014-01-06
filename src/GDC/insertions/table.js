@@ -8,27 +8,40 @@ define(['GDC/utils/tableFuncs'], function(tableUtils) {
 
 	insert.name = 'table';
 
+	function Table(cellsX, cellsY) {
+		this.DOMEle = tableUtils.tableCreate(cellsX, cellsY);
+		this.tableCells = [];
+	};
+
+	Table.prototype.getDOM = function() {
+		return this.DOMEle;
+	};
+	Table.prototype.setWidget = function(widget) {
+		this.widget = widget;
+	}
+	Table.prototype.initTableCells = function() {
+		var tds = this.widget.node.querySelectorAll('td'),
+			tdCMs = [];
+		_(tds).forEach(function(td, index) {
+			tdCMs.push(new codeMirrorConstructor(td));
+		});
+		this.tableCells = tdCMs;
+	}
+
 	insert.insertWidget = function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
-			tableEle = tableUtils.tableCreate();
-			
+			tableInstance = new Table(3,2);
 
-		var tableWidget = codeMirrorInstance.addLineWidget(currentLine, tableEle, {handleMouseEvents: true});
-		
-		var tds = tableWidget.node.querySelectorAll('td');
-		_(tds).forEach(function(td, index) {
-			var options = {};
-
-			if (index == 0) {
-				options.autoFocus = true;
-			}
-			var codeMirrorTableCell = new codeMirrorConstructor(td, options);
-		})
+			tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
+			tableInstance.initTableCells();
+			return tableInstance;
 	};
 
 	return insert;
+
+
 });
 
 //create an external table widget

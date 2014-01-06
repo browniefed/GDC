@@ -356,19 +356,30 @@ var GDC_insertions_table = function (tableUtils) {
         
         var insert = {}, codeMirrorInstance, codeMirrorConstructor;
         insert.name = 'table';
+        function Table(cellsX, cellsY) {
+            this.DOMEle = tableUtils.tableCreate(cellsX, cellsY);
+            this.tableCells = [];
+        }
+        Table.prototype.getDOM = function () {
+            return this.DOMEle;
+        };
+        Table.prototype.setWidget = function (widget) {
+            this.widget = widget;
+        };
+        Table.prototype.initTableCells = function () {
+            var tds = this.widget.node.querySelectorAll('td'), tdCMs = [];
+            _(tds).forEach(function (td, index) {
+                tdCMs.push(new codeMirrorConstructor(td));
+            });
+            this.tableCells = tdCMs;
+        };
         insert.insertWidget = function () {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableEle = tableUtils.tableCreate();
-            var tableWidget = codeMirrorInstance.addLineWidget(currentLine, tableEle, { handleMouseEvents: true });
-            var tds = tableWidget.node.querySelectorAll('td');
-            _(tds).forEach(function (td, index) {
-                var options = {};
-                if (index == 0) {
-                    options.autoFocus = true;
-                }
-                var codeMirrorTableCell = new codeMirrorConstructor(td, options);
-            });
+            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(3, 2);
+            tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
+            tableInstance.initTableCells();
+            return tableInstance;
         };
         return insert;
     }(GDC_utils_tableFuncs);
@@ -379,10 +390,13 @@ var GDC_insertions__widgetInserter = function (comment, image, link, table) {
                 image: image,
                 link: link,
                 table: table
-            };
+            }, createdWidgets = [];
         return {
             insert: function (widget) {
-                widgets[widget].insertWidget.call(this);
+                createdWidgets.push(widgets[widget].insertWidget.call(this));
+            },
+            getCreatedWidgets: function () {
+                return createdWidgets;
             }
         };
     }(GDC_insertions_comment, GDC_insertions_images, GDC_insertions_link, GDC_insertions_table);
