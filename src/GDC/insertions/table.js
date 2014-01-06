@@ -31,8 +31,10 @@ define(['GDC/utils/tableFuncs'], function(tableUtils) {
 	insert.insertWidget = function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
-		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
+		var currentLine = codeMirrorInstance.doc.getCursor(true),
+			endLine = codeMirrorInstance.doc.getCursor(false),
 			tableInstance = new Table(3,2);
+
 
 			tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
 			tableInstance.initTableCells();
