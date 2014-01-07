@@ -22,5 +22,5 @@ define([], function() {
 
 			return tbl;
 		}
-	}
-})
+	};
+});

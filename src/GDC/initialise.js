@@ -36,6 +36,6 @@ define(['GDC/_codemirror',
 
 		gdc.on('insert-image', function() {
 			widgetInserter.insert.call(gdc, 'image');
-		})
+		});
 	};
 });

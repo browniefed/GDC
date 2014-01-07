@@ -345,10 +345,8 @@ var GDC_utils_tableFuncs = function () {
             }
         };
     }();
-var GDC_insertions_table = function (tableUtils) {
+var GDC_insertions_widgets_table = function (tableUtils) {
         
-        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
-        insert.name = 'table';
         function Table(cellsX, cellsY) {
             this.DOMEle = tableUtils.tableCreate(cellsX, cellsY);
             this.tableCells = [];
@@ -359,23 +357,37 @@ var GDC_insertions_table = function (tableUtils) {
         Table.prototype.setWidget = function (widget) {
             this.widget = widget;
         };
-        Table.prototype.initTableCells = function () {
+        Table.prototype.initTableCells = function (codeMirrorConstructor) {
             var tds = this.widget.node.querySelectorAll('td'), tdCMs = [];
             _(tds).forEach(function (td, index) {
                 tdCMs.push(new codeMirrorConstructor(td));
             });
             this.tableCells = tdCMs;
         };
+        Table.prototype.destroy = function () {
+            this.widget.clear();
+        };
+        Table.prototype.addStyle = function (style) {
+            _(this.tableCells).each(function (cell) {
+                cell.fire(style);
+            });
+        };
+        return Table;
+    }(GDC_utils_tableFuncs);
+var GDC_insertions_table = function (Table) {
+        
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
+        insert.name = 'table';
         insert.insertWidget = function () {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
             var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(2, 5);
             tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
-            tableInstance.initTableCells();
+            tableInstance.initTableCells(codeMirrorConstructor);
             return tableInstance;
         };
         return insert;
-    }(GDC_utils_tableFuncs);
+    }(GDC_insertions_widgets_table);
 var GDC_insertions__widgetInserter = function (comment, image, link, table) {
         
         var widgets = {

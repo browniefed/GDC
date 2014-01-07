@@ -13,11 +13,13 @@ define(['GDC/insertions/widgets/table'], function(Table) {
 	insert.insertWidget = function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
+
 		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
 			tableInstance = new Table(2, 5);
 
 			tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
 			tableInstance.initTableCells(codeMirrorConstructor);
+
 			return tableInstance;
 	};
 
