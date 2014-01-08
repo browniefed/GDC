@@ -1,4 +1,4 @@
-define([], function() {
+define(['GDC/insertions/widgets/table'], function(ImageWidget) {
 
 	"use strict";
 
@@ -12,13 +12,10 @@ define([], function() {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true),
-			endLine = codeMirrorInstance.doc.getCursor(false);
+			endLine = codeMirrorInstance.doc.getCursor(false),
+			imgInsert = new ImageWidget('morgan.png');
 
-
-		var image = new Image();
-		image.src = 'morgan.png';
-		image.style.display = 'inline';
-		codeMirrorInstance.markText(currentLine, endLine, {replacedWith: image});
+		codeMirrorInstance.markText(currentLine, endLine, {replacedWith: imgInsert.getDOM()});
 	};
 
 	return insert;
