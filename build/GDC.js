@@ -1,6 +1,6 @@
 /*
 	
-	GDC - v0.1.0 - 2014-01-07
+	GDC - v0.1.0 - 2014-01-08
 	==============================================================
 	
 	Licensed WTFPL
@@ -306,32 +306,6 @@ var GDC_insertions_comment = function () {
         };
         return insert;
     }();
-var GDC_insertions_images = function () {
-        
-        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
-        insert.name = 'image';
-        insert.insertWidget = function (selection) {
-            codeMirrorInstance = this._codemirror.getCodemirror();
-            codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false);
-            var image = new Image();
-            image.src = 'morgan.png';
-            image.style.display = 'inline';
-            codeMirrorInstance.markText(currentLine, endLine, { replacedWith: image });
-        };
-        return insert;
-    }();
-var GDC_insertions_link = function () {
-        
-        var insert = {};
-        insert.name = 'link';
-        insert.insertWidget = function (selection) {
-            if (selection) {
-            } else {
-            }
-        };
-        return insert;
-    }();
 var GDC_utils_tableFuncs = function () {
         
         return {
@@ -383,6 +357,29 @@ var GDC_insertions_widgets_table = function (tableUtils) {
         };
         return Table;
     }(GDC_utils_tableFuncs);
+var GDC_insertions_images = function (ImageWidget) {
+        
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
+        insert.name = 'image';
+        insert.insertWidget = function (selection) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            codeMirrorConstructor = this._codemirror.codemirror;
+            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false), imgInsert = new ImageWidget('morgan.png');
+            codeMirrorInstance.markText(currentLine, endLine, { replacedWith: imgInsert.getDOM() });
+        };
+        return insert;
+    }(GDC_insertions_widgets_table);
+var GDC_insertions_link = function () {
+        
+        var insert = {};
+        insert.name = 'link';
+        insert.insertWidget = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return insert;
+    }();
 var GDC_insertions_table = function (Table) {
         
         var insert = {}, codeMirrorInstance, codeMirrorConstructor;
