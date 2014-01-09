@@ -7,11 +7,11 @@ define([], function() {
 		if (src) {
 			this.image.src = src;
 		}
-	}
+	};
 
 	IamgeWidget.prototype.getDOM = function() {
 		return this.image;
-	}
+	};
 
 	return ImageWidget;
 });

@@ -251,6 +251,10 @@ body {
   text-decoration: underline;
 }
 
+.gdc-style-underline.gdc-style-strikethrough {
+  text-decoration: underline line-through;
+}
+
 .gdc-style-italic {
   font-style: italic;
 }
