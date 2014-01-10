@@ -1,4 +1,10 @@
-define(['GDC/_currentStyles', 'GDC/styles/bold','GDC/styles/italic','GDC/styles/underline','GDC/styles/strikethrough'], function(styleManager, bold, italic, underline, strikethrough) {
+define(['GDC/_currentStyles', 
+	'GDC/styles/bold',
+	'GDC/styles/italic',
+	'GDC/styles/underline',
+	'GDC/styles/strikethrough',
+	'GDC/styles/listul',
+	'GDC/styles/listol'], function(styleManager, bold, italic, underline, strikethrough, listol, listul) {
 
 	"use strict";
 
@@ -6,7 +12,9 @@ define(['GDC/_currentStyles', 'GDC/styles/bold','GDC/styles/italic','GDC/styles/
 		bold: bold,
 		italic: italic,
 		underline: underline,
-		strikethrough: strikethrough
+		strikethrough: strikethrough,
+		ol: listol,
+		ul: listul
 	};
 	
 	var styleApplier = {},

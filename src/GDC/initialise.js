@@ -37,5 +37,14 @@ define(['GDC/_codemirror',
 		gdc.on('insert-image', function() {
 			widgetInserter.insert.call(gdc, 'image');
 		});
+
+		gdc.on('ol', function() {
+			styleApplier.applyStyle.call(gdc, 'ol', {});
+		});
+
+		gdc.on('ul', function() {
+			styleApplier.applyStyle.call(gdc, 'ul', {});
+		});
+
 	};
 });

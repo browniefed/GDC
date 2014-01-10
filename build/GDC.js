@@ -254,13 +254,47 @@ var GDC_styles_strikethrough = function (styleManager) {
         };
         return style;
     }(GDC__currentStyles);
-var GDC_styles__styles = function (styleManager, bold, italic, underline, strikethrough) {
+var GDC_styles_listul = function (styleManager) {
+        
+        var style = {}, removeStyle = false, codeMirrorInstance;
+        style.name = 'ul';
+        style.executeStyle = function (selection) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            if (selection) {
+                removeStyle = styleManager.removeStyleFromSelection(codeMirrorInstance, selection, 'gdc-style-' + style.name);
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                }
+            } else {
+            }
+        };
+        return style;
+    }(GDC__currentStyles);
+var GDC_styles_listol = function (styleManager) {
+        
+        var style = {}, removeStyle = false, codeMirrorInstance;
+        style.name = 'ol';
+        style.executeStyle = function (selection) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            if (selection) {
+                removeStyle = styleManager.removeStyleFromSelection(codeMirrorInstance, selection, 'gdc-style-' + style.name);
+                if (!removeStyle) {
+                    this._codemirror.getCodemirror().doc.markText(selection.from, selection.to, { className: 'gdc-style-' + style.name });
+                }
+            } else {
+            }
+        };
+        return style;
+    }(GDC__currentStyles);
+var GDC_styles__styles = function (styleManager, bold, italic, underline, strikethrough, listol, listul) {
         
         var styles = {
                 bold: bold,
                 italic: italic,
                 underline: underline,
-                strikethrough: strikethrough
+                strikethrough: strikethrough,
+                ol: listol,
+                ul: listul
             };
         var styleApplier = {}, isSelected = false, selection = {};
         styleApplier.applyStyle = function (style) {
@@ -275,7 +309,7 @@ var GDC_styles__styles = function (styleManager, bold, italic, underline, strike
             }
         };
         return styleApplier;
-    }(GDC__currentStyles, GDC_styles_bold, GDC_styles_italic, GDC_styles_underline, GDC_styles_strikethrough);
+    }(GDC__currentStyles, GDC_styles_bold, GDC_styles_italic, GDC_styles_underline, GDC_styles_strikethrough, GDC_styles_listul, GDC_styles_listol);
 var circular = function () {
         
         return [];
@@ -434,6 +468,12 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             });
             gdc.on('insert-image', function () {
                 widgetInserter.insert.call(gdc, 'image');
+            });
+            gdc.on('ol', function () {
+                styleApplier.applyStyle.call(gdc, 'ol', {});
+            });
+            gdc.on('ul', function () {
+                styleApplier.applyStyle.call(gdc, 'ul', {});
             });
         };
     }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles, GDC_insertions__widgetInserter);

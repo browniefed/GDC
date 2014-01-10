@@ -58,6 +58,32 @@ body {
     font-style: italic;
 }
 
+.gdc-style-ul {
+    text-indent: -15px;
+    padding-left: 45px;
+    position: relative;
+}
+
+.gdc-style-ul::before {
+    content: '  •  ';
+    position: absolute;
+    left: 25px;
+    top: 2px;
+}
+
+.gdc-style-ol {
+    text-indent: -15px;
+    padding-left: 45px;
+    position: relative;
+}
+
+.gdc-style-ol::before {
+    content: '1.';
+    position: absolute;
+    left: 25px;
+    top: 2px;
+}
+
 .gdc-table-widget {
     width: 100px;
     height: 100px;
