@@ -4,4 +4,7 @@ The idea is evolving after discovering Ractive and reading up on React. The goal
 It needs to also be able to take an existing HTML structure, parse and convert it to the reactive structure so existing documents can be imported. It will need to understand and interpret CSS.
 
 These ideas aren't new and exist in one open source form or another. I'm just attempting to bring them all together to make the best rich text editor out there.
-\\H
+
+Tables sort of work in that you can make them and type in them but not yet define how big they are or respond to the bolding or italics, or any other styles.
+
+Styles workish for now, still working on better detecting styles in a given selection and removing them at will.
