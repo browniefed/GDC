@@ -6,20 +6,22 @@ define(['GDC/insertions/widgets/listol', 'GDC/insertions/widgets/listul'], funct
 		codeMirrorInstance,
 		codeMirrorConstructor,
 		listTypes = {
-			lilstol: ListOlWidget,
+			listol: ListOlWidget,
 			listul: ListUlWidget
 		}
 
-	insert.name = 'image';
+  	var LIST_SENTRY = "♂";
+
+	insert.name = 'list';
 
 	insert.insertWidget = function(selection, listType) {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true),
-			endLine = codeMirrorInstance.doc.getCursor(false),
-			listInsert = listTypes[listType];
+			listInsert = new listTypes[listType];
 
-		codeMirrorInstance.markText(currentLine, endLine, {replacedWith: listInsert.getDOM()});
+		codeMirrorInstance.replaceRange(LIST_SENTRY, {line: currentLine.line, ch: 0});
+		codeMirrorInstance.markText({line: currentLine.line, ch:0}, {line: currentLine.line, ch: 1}, {replacedWith: listInsert.getDOM()});
 	};
 
 	return insert;

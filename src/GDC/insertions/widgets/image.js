@@ -3,13 +3,13 @@ define([], function() {
 
 	var ImageWidget = function(src) {
 		this.image = new Image();
-		this.style.display = 'inline';
+		this.image.style.display = 'inline';
 		if (src) {
 			this.image.src = src;
 		}
 	};
 
-	IamgeWidget.prototype.getDOM = function() {
+	ImageWidget.prototype.getDOM = function() {
 		return this.image;
 	};
 

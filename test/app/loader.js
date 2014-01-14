@@ -11,17 +11,17 @@ define(['../../build/GDC', '../../js/codemirror/lib/codemirror'], function(GDC, 
 		olButton = document.getElementById('gdc-list-ol-button');
 
 	boldButton.addEventListener('click', function() {
-		clone.fire('bold');
+		clone.fire('apply-bold');
 	}, false);
 
 	italicButton.addEventListener('click', function() {
-		clone.fire('italic');
+		clone.fire('apply-italic');
 	}, false);
 	strikethroughButton.addEventListener('click', function() {
-		clone.fire('strikethrough');
+		clone.fire('apply-strikethrough');
 	}, false);
 	underlineButton.addEventListener('click', function() {
-		clone.fire('underline');
+		clone.fire('apply-underline');
 	}, false);
 
 	tableButton.addEventListener('click', function() {
@@ -33,10 +33,10 @@ define(['../../build/GDC', '../../js/codemirror/lib/codemirror'], function(GDC, 
 	}, false);
 
 	ulButton.addEventListener('click', function() {
-		clone.fire('ul');
+		clone.fire('insert-ul');
 	}, false);
 
 	olButton.addEventListener('click', function() {
-		clone.fire('ol');
+		clone.fire('insert-ol');
 	}, false);
 });

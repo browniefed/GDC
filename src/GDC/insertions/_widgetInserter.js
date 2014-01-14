@@ -1,7 +1,8 @@
 define(['GDC/insertions/comment', 
 		'GDC/insertions/images', 
 		'GDC/insertions/link', 
-		'GDC/insertions/table'], function(comment, image, link, table) {
+		'GDC/insertions/table',
+		'GDC/insertions/list'], function(comment, image, link, table, list) {
 
 	"use strict";
 	
@@ -9,13 +10,14 @@ define(['GDC/insertions/comment',
 		comment: comment,
 		image: image,
 		link: link,
-		table: table
+		table: table, 
+		list: list
 	},
 	createdWidgets = [];
 
 	return {
-		insert: function(widget) {
-			createdWidgets.push(widgets[widget].insertWidget.call(this));
+		insert: function(widget, selection, suboption) {
+			createdWidgets.push(widgets[widget].insertWidget.call(this, selection, suboption));
 		}, 
 		getCreatedWidgets: function() {
 			return createdWidgets;

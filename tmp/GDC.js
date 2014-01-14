@@ -318,12 +318,65 @@ var GDC__codemirror = function () {
         CodemirrorManager.prototype.fromTextArea = function (el) {
             this._codemirror = this.codemirror.fromTextArea(el);
         };
+        CodemirrorManager.prototype.on = function (target, func) {
+            this._codemirror.on(target, func);
+        };
+        CodemirrorManager.prototype.off = function (target, func) {
+            this._codemirror.off(target, func);
+        };
         return CodemirrorManager;
     }();
 var GDC_insertions_comment = function () {
         
         var insert = {};
         insert.name = 'comment';
+        insert.insertWidget = function (selection) {
+            if (selection) {
+            } else {
+            }
+        };
+        return insert;
+    }();
+var GDC_insertions_widgets_image = function () {
+        
+        var ImageWidget = function (src) {
+            this.image = new Image();
+            this.image.style.display = 'inline';
+            if (src) {
+                this.image.src = src;
+            }
+        };
+        ImageWidget.prototype.getDOM = function () {
+            return this.image;
+        };
+        return ImageWidget;
+    }();
+var GDC_insertions_images = function (ImageWidget) {
+        
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor, IMAGE_SENTRY = '\xcf';
+        insert.name = 'image';
+        insert.insertWidget = function (selection) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            codeMirrorConstructor = this._codemirror.codemirror;
+            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false), imgInsert = new ImageWidget('morgan.png');
+            if (currentLine.line == endLine.line && currentLine.ch == endLine.ch) {
+                endLine = {
+                    line: endLine.line,
+                    ch: endLine.ch + 1
+                };
+            }
+            codeMirrorInstance.replaceRange(IMAGE_SENTRY, currentLine, endLine);
+            codeMirrorInstance.markText(currentLine, endLine, {
+                handleMouseEvents: true,
+                replacedWith: imgInsert.getDOM()
+            });
+        };
+        return insert;
+    }(GDC_insertions_widgets_image);
+var GDC_insertions_link = function () {
+        
+        var insert = {};
+        insert.name = 'link';
         insert.insertWidget = function (selection) {
             if (selection) {
             } else {
@@ -382,76 +435,112 @@ var GDC_insertions_widgets_table = function (tableUtils) {
         };
         return Table;
     }(GDC_utils_tableFuncs);
-var GDC_insertions_images = function (ImageWidget) {
-        
-        var insert = {}, codeMirrorInstance, codeMirrorConstructor;
-        insert.name = 'image';
-        insert.insertWidget = function (selection) {
-            codeMirrorInstance = this._codemirror.getCodemirror();
-            codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true), endLine = codeMirrorInstance.doc.getCursor(false), imgInsert = new ImageWidget('morgan.png');
-            codeMirrorInstance.markText(currentLine, endLine, { replacedWith: imgInsert.getDOM() });
-        };
-        return insert;
-    }(GDC_insertions_widgets_table);
-var GDC_insertions_link = function () {
-        
-        var insert = {};
-        insert.name = 'link';
-        insert.insertWidget = function (selection) {
-            if (selection) {
-            } else {
-            }
-        };
-        return insert;
-    }();
 var GDC_insertions_table = function (Table) {
         
         var insert = {}, codeMirrorInstance, codeMirrorConstructor;
         insert.name = 'table';
-        insert.insertWidget = function () {
+        insert.insertWidget = function (x, y) {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
-            var currentLine = codeMirrorInstance.doc.getCursor(true).line, tableInstance = new Table(2, 5);
-            tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
+            var x = x || 2;
+            var y = y || 5;
+            var currentLine = codeMirrorInstance.doc.getCursor(true), tableInstance = new Table(x, y);
+            codeMirrorInstance.replaceRange('\n', {
+                line: currentLine.line + 1,
+                ch: 0
+            });
+            codeMirrorInstance.replaceRange('\n', {
+                line: currentLine.line + 2,
+                ch: 0
+            });
+            tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine.line, tableInstance.getDOM()));
             tableInstance.initTableCells(codeMirrorConstructor);
             return tableInstance;
         };
         return insert;
     }(GDC_insertions_widgets_table);
-var GDC_insertions__widgetInserter = function (comment, image, link, table) {
+var GDC_insertions_widgets_listol = function () {
+        
+        var ListOL = function () {
+            this.dom = document.createElement('span');
+            this.dom.innerHTML = '  \u2022  ';
+        };
+        ListOL.prototype.getDOM = function () {
+            return this.dom;
+        };
+        return ListOL;
+    }();
+var GDC_insertions_widgets_listul = function () {
+        
+        var ListUL = function () {
+            this.dom = document.createElement('span');
+            this.dom.innerHTML = '  \u2022  ';
+        };
+        ListUL.prototype.getDOM = function () {
+            return this.dom;
+        };
+        return ListUL;
+    }();
+var GDC_insertions_list = function (ListOlWidget, ListUlWidget) {
+        
+        var insert = {}, codeMirrorInstance, codeMirrorConstructor, listTypes = {
+                listol: ListOlWidget,
+                listul: ListUlWidget
+            };
+        var LIST_SENTRY = '\u2642';
+        insert.name = 'list';
+        insert.insertWidget = function (selection, listType) {
+            codeMirrorInstance = this._codemirror.getCodemirror();
+            codeMirrorConstructor = this._codemirror.codemirror;
+            var currentLine = codeMirrorInstance.doc.getCursor(true), listInsert = new listTypes[listType]();
+            codeMirrorInstance.replaceRange(LIST_SENTRY, {
+                line: currentLine.line,
+                ch: 0
+            });
+            codeMirrorInstance.markText({
+                line: currentLine.line,
+                ch: 0
+            }, {
+                line: currentLine.line,
+                ch: 1
+            }, { replacedWith: listInsert.getDOM() });
+        };
+        return insert;
+    }(GDC_insertions_widgets_listol, GDC_insertions_widgets_listul);
+var GDC_insertions__widgetInserter = function (comment, image, link, table, list) {
         
         var widgets = {
                 comment: comment,
                 image: image,
                 link: link,
-                table: table
+                table: table,
+                list: list
             }, createdWidgets = [];
         return {
-            insert: function (widget) {
-                createdWidgets.push(widgets[widget].insertWidget.call(this));
+            insert: function (widget, selection, suboption) {
+                createdWidgets.push(widgets[widget].insertWidget.call(this, selection, suboption));
             },
             getCreatedWidgets: function () {
                 return createdWidgets;
             }
         };
-    }(GDC_insertions_comment, GDC_insertions_images, GDC_insertions_link, GDC_insertions_table);
+    }(GDC_insertions_comment, GDC_insertions_images, GDC_insertions_link, GDC_insertions_table, GDC_insertions_list);
 var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier, widgetInserter) {
         
         return function (gdc, options) {
             defineProperties(gdc, { _subs: { value: {} } });
             gdc._codemirror = new CodemirrorManager(options.codemirror, { lineWrapping: true });
             gdc._codemirror.fromTextArea(options.el);
-            gdc.on('bold', function () {
+            gdc.on('apply-bold', function () {
                 styleApplier.applyStyle.call(gdc, 'bold', {});
             });
-            gdc.on('italic', function () {
+            gdc.on('apply-italic', function () {
                 styleApplier.applyStyle.call(gdc, 'italic', {});
             });
-            gdc.on('strikethrough', function () {
+            gdc.on('apply-strikethrough', function () {
                 styleApplier.applyStyle.call(gdc, 'strikethrough', {});
             });
-            gdc.on('underline', function () {
+            gdc.on('apply-underline', function () {
                 styleApplier.applyStyle.call(gdc, 'underline', {});
             });
             gdc.on('insert-table', function () {
@@ -460,11 +549,14 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             gdc.on('insert-image', function () {
                 widgetInserter.insert.call(gdc, 'image');
             });
-            gdc.on('ol', function () {
-                styleApplier.applyStyle.call(gdc, 'ol', {});
+            gdc.on('insert-ol', function () {
+                widgetInserter.insert.call(gdc, 'list', {}, 'listol');
             });
-            gdc.on('ul', function () {
-                styleApplier.applyStyle.call(gdc, 'ul', {});
+            gdc.on('insert-ul', function () {
+                widgetInserter.insert.call(gdc, 'list', {}, 'listul');
+            });
+            gdc._codemirror.on('beforeSelectionChange', function () {
+                console.log(arguments);
             });
         };
     }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles, GDC_insertions__widgetInserter);

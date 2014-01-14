@@ -1,13 +1,13 @@
-define(['GDC/insertions/widgets/table'], function(ImageWidget) {
+define(['GDC/insertions/widgets/image'], function(ImageWidget) {
 
 	"use strict";
 
 	var insert = {},
 		codeMirrorInstance,
-		codeMirrorConstructor;
+		codeMirrorConstructor,
+		IMAGE_SENTRY = 'Ï';
 
 	insert.name = 'image';
-
 	insert.insertWidget = function(selection) {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
@@ -15,7 +15,11 @@ define(['GDC/insertions/widgets/table'], function(ImageWidget) {
 			endLine = codeMirrorInstance.doc.getCursor(false),
 			imgInsert = new ImageWidget('morgan.png');
 
-		codeMirrorInstance.markText(currentLine, endLine, {replacedWith: imgInsert.getDOM()});
+		if (currentLine.line == endLine.line && currentLine.ch == endLine.ch) {
+			endLine = {line: endLine.line, ch: endLine.ch + 1};
+		}
+		codeMirrorInstance.replaceRange(IMAGE_SENTRY, currentLine, endLine);
+		codeMirrorInstance.markText(currentLine, endLine, {handleMouseEvents: true, replacedWith: imgInsert.getDOM()});
 	};
 
 	return insert;

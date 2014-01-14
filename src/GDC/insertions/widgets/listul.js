@@ -1,21 +1,16 @@
-define(['GDC/insertions/widgets/table'], function(ImageWidget) {
+define([], function() {
 
 	"use strict";
 
-	var insert = {},
-		codeMirrorInstance,
-		codeMirrorConstructor;
+	var ListUL = function() {
+		this.dom = document.createElement('span');
+		this.dom.innerHTML = '  •  ';
+	}
 
-	insert.name = 'image';
+	ListUL.prototype.getDOM = function() {
+		return this.dom;
+	}
+	
 
-	insert.insertWidget = function(selection) {
-		codeMirrorInstance = this._codemirror.getCodemirror();
-		codeMirrorConstructor = this._codemirror.codemirror;
-		var currentLine = codeMirrorInstance.doc.getCursor(true),
-			endLine = codeMirrorInstance.doc.getCursor(false);
-
-		codeMirrorInstance.markText(currentLine, endLine, {replacedWith: imgInsert.getDOM()});
-	};
-
-	return insert;
+	return ListUL;
 });

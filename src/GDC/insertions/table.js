@@ -10,14 +10,18 @@ define(['GDC/insertions/widgets/table'], function(Table) {
 
 
 
-	insert.insertWidget = function() {
+	insert.insertWidget = function(x, y) {
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
+		var x = x || 2;
+		var y = y || 5;
+		var currentLine = codeMirrorInstance.doc.getCursor(true),
+			tableInstance = new Table(x, y);
 
-		var currentLine = codeMirrorInstance.doc.getCursor(true).line,
-			tableInstance = new Table(2, 5);
+			codeMirrorInstance.replaceRange('\n', {line: currentLine.line + 1, ch: 0});
+			codeMirrorInstance.replaceRange('\n', {line: currentLine.line + 2, ch: 0});
 
-			tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine, tableInstance.getDOM()));
+			tableInstance.setWidget(codeMirrorInstance.addLineWidget(currentLine.line, tableInstance.getDOM()));
 			tableInstance.initTableCells(codeMirrorConstructor);
 
 			return tableInstance;
@@ -27,8 +31,3 @@ define(['GDC/insertions/widgets/table'], function(Table) {
 
 
 });
-
-//create an external table widget
-//It's actually a table, but each cell is a GDC
-//Then we can just fire events on it, maybe make a GDC inline/barebones
-//This will be passed a height, and if that height changes then it'll resize itself, fire heightchanged event and then the master GDC will take care of resizing the table cell

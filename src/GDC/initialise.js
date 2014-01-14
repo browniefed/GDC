@@ -15,18 +15,20 @@ define(['GDC/_codemirror',
 		gdc._codemirror = new CodemirrorManager(options.codemirror, {
 			lineWrapping: true
 		});
+
 		gdc._codemirror.fromTextArea(options.el);
 
-		gdc.on('bold', function() {
+		gdc.on('apply-bold', function() {
 			styleApplier.applyStyle.call(gdc, 'bold', {});
 		});
-		gdc.on('italic', function() {
+		
+		gdc.on('apply-italic', function() {
 			styleApplier.applyStyle.call(gdc, 'italic', {});
 		});
-		gdc.on('strikethrough', function() {
+		gdc.on('apply-strikethrough', function() {
 			styleApplier.applyStyle.call(gdc, 'strikethrough', {});
 		});
-		gdc.on('underline', function() {
+		gdc.on('apply-underline', function() {
 			styleApplier.applyStyle.call(gdc, 'underline', {});
 		});
 
@@ -38,12 +40,16 @@ define(['GDC/_codemirror',
 			widgetInserter.insert.call(gdc, 'image');
 		});
 
-		gdc.on('ol', function() {
-			styleApplier.applyStyle.call(gdc, 'ol', {});
+		gdc.on('insert-ol', function() {
+			widgetInserter.insert.call(gdc, 'list', {}, 'listol');
 		});
 
-		gdc.on('ul', function() {
-			styleApplier.applyStyle.call(gdc, 'ul', {});
+		gdc.on('insert-ul', function() {
+			widgetInserter.insert.call(gdc, 'list', {}, 'listul');
+		});
+
+		gdc._codemirror.on('beforeSelectionChange', function() {
+			console.log(arguments);
 		});
 
 	};

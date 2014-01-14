@@ -18,6 +18,13 @@ define([], function() {
 		this._codemirror = this.codemirror.fromTextArea(el);
 	};
 
+	CodemirrorManager.prototype.on = function(target, func) {
+		this._codemirror.on(target, func);
+	};
+
+	CodemirrorManager.prototype.off = function(target, func) {
+		this._codemirror.off(target, func);
+	};
 
 	return CodemirrorManager;
 });
