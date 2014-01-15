@@ -463,9 +463,10 @@ var GDC_insertions_widgets_listol = function () {
         
         var ListOL = function () {
             this.dom = document.createElement('span');
-            this.dom.innerHTML = '  \u2022  ';
+            this.replace = '  %d.  ';
         };
-        ListOL.prototype.getDOM = function () {
+        ListOL.prototype.getDOM = function (currentLine, startOfList) {
+            this.dom.innerHTML = this.replace.replace('%d', currentLine - startOfList + 1);
             return this.dom;
         };
         return ListOL;
@@ -493,18 +494,45 @@ var GDC_insertions_list = function (ListOlWidget, ListUlWidget) {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
             var currentLine = codeMirrorInstance.doc.getCursor(true), listInsert = new listTypes[listType]();
-            codeMirrorInstance.replaceRange(LIST_SENTRY, {
-                line: currentLine.line,
-                ch: 0
-            });
-            codeMirrorInstance.markText({
-                line: currentLine.line,
-                ch: 0
-            }, {
-                line: currentLine.line,
-                ch: 1
-            }, { replacedWith: listInsert.getDOM() });
+            var isLine = codeMirrorInstance.getLine(currentLine.line).indexOf(LIST_SENTRY) !== -1;
+            if (!isLine) {
+                codeMirrorInstance.replaceRange(LIST_SENTRY, {
+                    line: currentLine.line,
+                    ch: 0
+                });
+                codeMirrorInstance.markText({
+                    line: currentLine.line,
+                    ch: 0
+                }, {
+                    line: currentLine.line,
+                    ch: 1
+                }, { replacedWith: listInsert.getDOM(currentLine.line, getFirstListLine(currentLine.line)) });
+            } else {
+                codeMirrorInstance.replaceRange('', {
+                    line: currentLine.line,
+                    ch: 0
+                }, {
+                    line: currentLine.line,
+                    ch: 1
+                });
+            }
         };
+        function getFirstListLine(lineStart) {
+            var checkLine = !(lineStart - 1) ? lineStart - 1 : 0, isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
+            if (!isList) {
+                return lineStart;
+            }
+            while (isList) {
+                if (checkLine <= 0) {
+                    break;
+                }
+                isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
+                if (isList) {
+                    checkLine--;
+                }
+            }
+            return checkLine;
+        }
         return insert;
     }(GDC_insertions_widgets_listol, GDC_insertions_widgets_listul);
 var GDC_insertions__widgetInserter = function (comment, image, link, table, list) {

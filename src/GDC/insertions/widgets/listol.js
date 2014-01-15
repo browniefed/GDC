@@ -4,10 +4,11 @@ define([], function() {
 
 	var ListOL = function() {
 		this.dom = document.createElement('span');
-		this.dom.innerHTML = '  •  ';
+		this.replace = '  %d.  ';
 	}
 
-	ListOL.prototype.getDOM = function() {
+	ListOL.prototype.getDOM = function(currentLine, startOfList) {
+		this.dom.innerHTML = (this.replace.replace('%d', (currentLine - startOfList) + 1))
 		return this.dom;
 	}
 	
