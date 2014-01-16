@@ -13,5 +13,8 @@ define([], function() {
 	}
 	
 
-	return ListOL;
+	return {
+		obj: ListOL,
+		SENTRY: '♀'
+	};
 });

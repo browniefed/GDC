@@ -8,9 +8,9 @@ define(['GDC/insertions/widgets/listol', 'GDC/insertions/widgets/listul'], funct
 		listTypes = {
 			listol: ListOlWidget,
 			listul: ListUlWidget
-		}
+		},
+		LIST_SENTRY;
 
-  	var LIST_SENTRY = "♂";
 
 	insert.name = 'list';
 
@@ -18,21 +18,28 @@ define(['GDC/insertions/widgets/listol', 'GDC/insertions/widgets/listul'], funct
 		codeMirrorInstance = this._codemirror.getCodemirror();
 		codeMirrorConstructor = this._codemirror.codemirror;
 		var currentLine = codeMirrorInstance.doc.getCursor(true),
-			listInsert = new listTypes[listType];
+			list = listTypes[listType],
+			listInsert = list.obj,
+			listObj;
+
+		LIST_SENTRY = list.SENTRY;
 
 		var isLine = codeMirrorInstance.getLine(currentLine.line).indexOf(LIST_SENTRY) !== -1;
 
 		if (!isLine) {
+			listObj = new listInsert();
 			codeMirrorInstance.replaceRange(LIST_SENTRY, {line: currentLine.line, ch: 0});
-			codeMirrorInstance.markText({line: currentLine.line, ch:0}, {line: currentLine.line, ch: 1}, {replacedWith: listInsert.getDOM(currentLine.line, getFirstListLine(currentLine.line))});
+			codeMirrorInstance.markText({line: currentLine.line, ch:0}, {line: currentLine.line, ch: 1}, {replacedWith: listObj.getDOM(currentLine.line, getFirstListLine(currentLine.line))});
 		} else {
 			codeMirrorInstance.replaceRange('', {line: currentLine.line, ch: 0}, {line: currentLine.line, ch: 1});
 		}
 	};
 
 	function getFirstListLine(lineStart) {
-		var checkLine = (!(lineStart - 1) ? lineStart - 1 : 0),
-			isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
+		debugger;
+		var checkLine = ((lineStart - 1) >= 0 ? lineStart - 1 : 0);
+		debugger;
+		var isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
 		if (!isList) {
 			return lineStart;
 		}
@@ -44,6 +51,8 @@ define(['GDC/insertions/widgets/listol', 'GDC/insertions/widgets/listul'], funct
 			isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
 			if (isList) {
 				checkLine--;
+			} else {
+				checkLine++;
 			}
 		}
 		return checkLine;

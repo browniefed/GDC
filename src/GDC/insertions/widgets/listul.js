@@ -12,5 +12,8 @@ define([], function() {
 	}
 	
 
-	return ListUL;
+	return {
+		obj: ListUL,
+		SENTRY: '♂'
+	};
 });
