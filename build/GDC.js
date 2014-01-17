@@ -1,6 +1,6 @@
 /*
 	
-	GDC - v0.1.0 - 2014-01-15
+	GDC - v0.1.0 - 2014-01-16
 	==============================================================
 	
 	Licensed WTFPL
@@ -472,16 +472,13 @@ var GDC_insertions_widgets_listol = function () {
         
         var ListOL = function () {
             this.dom = document.createElement('span');
-            this.replace = '  %d.  ';
+            this.replace = '  %d. ';
         };
         ListOL.prototype.getDOM = function (currentLine, startOfList) {
             this.dom.innerHTML = this.replace.replace('%d', currentLine - startOfList + 1);
             return this.dom;
         };
-        return {
-            obj: ListOL,
-            SENTRY: '\u2640'
-        };
+        return ListOL;
     }();
 var GDC_insertions_widgets_listul = function () {
         
@@ -492,25 +489,32 @@ var GDC_insertions_widgets_listul = function () {
         ListUL.prototype.getDOM = function () {
             return this.dom;
         };
-        return {
-            obj: ListUL,
-            SENTRY: '\u2642'
-        };
+        return ListUL;
     }();
 var GDC_insertions_list = function (ListOlWidget, ListUlWidget) {
         
         var insert = {}, codeMirrorInstance, codeMirrorConstructor, listTypes = {
-                listol: ListOlWidget,
-                listul: ListUlWidget
+                listol: {
+                    obj: ListOlWidget,
+                    SENTRY: '\u2640'
+                },
+                listul: {
+                    obj: ListUlWidget,
+                    SENTRY: '\u2642'
+                }
+            }, altListType = {
+                listol: 'listul',
+                listul: 'listol'
             }, LIST_SENTRY;
         insert.name = 'list';
+        insert.listTypes = listTypes;
         insert.insertWidget = function (selection, listType) {
             codeMirrorInstance = this._codemirror.getCodemirror();
             codeMirrorConstructor = this._codemirror.codemirror;
             var currentLine = codeMirrorInstance.doc.getCursor(true), list = listTypes[listType], listInsert = list.obj, listObj;
             LIST_SENTRY = list.SENTRY;
-            var isLine = codeMirrorInstance.getLine(currentLine.line).indexOf(LIST_SENTRY) !== -1;
-            if (!isLine) {
+            var isLineList = codeMirrorInstance.getLine(currentLine.line).indexOf(LIST_SENTRY) !== -1, isLineAltList = codeMirrorInstance.getLine(currentLine.line).indexOf(listTypes[altListType[listType]].SENTRY) !== -1;
+            if (!isLineList && !isLineAltList) {
                 listObj = new listInsert();
                 codeMirrorInstance.replaceRange(LIST_SENTRY, {
                     line: currentLine.line,
@@ -523,7 +527,7 @@ var GDC_insertions_list = function (ListOlWidget, ListUlWidget) {
                     line: currentLine.line,
                     ch: 1
                 }, { replacedWith: listObj.getDOM(currentLine.line, getFirstListLine(currentLine.line)) });
-            } else {
+            } else if (isLineList) {
                 codeMirrorInstance.replaceRange('', {
                     line: currentLine.line,
                     ch: 0
@@ -531,12 +535,32 @@ var GDC_insertions_list = function (ListOlWidget, ListUlWidget) {
                     line: currentLine.line,
                     ch: 1
                 });
+            } else if (!isLineList && isLineAltList) {
+                codeMirrorInstance.replaceRange('', {
+                    line: currentLine.line,
+                    ch: 0
+                }, {
+                    line: currentLine.line,
+                    ch: 1
+                });
+                LIST_SENTRY = listTypes[listType].SENTRY;
+                listObj = listTypes[altListType[listType]].obj;
+                listObj = new listInsert();
+                codeMirrorInstance.replaceRange(LIST_SENTRY, {
+                    line: currentLine.line,
+                    ch: 0
+                });
+                codeMirrorInstance.markText({
+                    line: currentLine.line,
+                    ch: 0
+                }, {
+                    line: currentLine.line,
+                    ch: 1
+                }, { replacedWith: listObj.getDOM(currentLine.line, getFirstListLine(currentLine.line)) });
             }
         };
         function getFirstListLine(lineStart) {
-            debugger;
             var checkLine = lineStart - 1 >= 0 ? lineStart - 1 : 0;
-            debugger;
             var isList = codeMirrorInstance.getLine(checkLine).indexOf(LIST_SENTRY) !== -1;
             if (!isList) {
                 return lineStart;
@@ -571,7 +595,8 @@ var GDC_insertions__widgetInserter = function (comment, image, link, table, list
             },
             getCreatedWidgets: function () {
                 return createdWidgets;
-            }
+            },
+            widgets: widgets
         };
     }(GDC_insertions_comment, GDC_insertions_images, GDC_insertions_link, GDC_insertions_table, GDC_insertions_list);
 var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier, widgetInserter) {
@@ -604,8 +629,21 @@ var GDC_initialise = function (CodemirrorManager, defineProperties, styleApplier
             gdc.on('insert-ul', function () {
                 widgetInserter.insert.call(gdc, 'list', {}, 'listul');
             });
-            gdc._codemirror.on('beforeSelectionChange', function () {
-                console.log(arguments);
+            gdc._codemirror.on('beforeSelectionChange', function (codemirrorInstance, data) {
+                var range = data.ranges[0], from = range.from(), to = range.to(), list = widgetInserter.widgets.list, listTypes = list.listTypes;
+                if (from.line == to.line && from.ch == 0 && to.ch == 0) {
+                    debugger;
+                    _.each(listTypes, function (type) {
+                        if (codemirrorInstance.getLine(from.line).indexOf(type.SENTRY) !== -1) {
+                            codemirrorInstance.doc.setCursor({
+                                line: from.line,
+                                ch: 1,
+                                outside: true
+                            });
+                        }
+                    });
+                    data.update(data.ranges);
+                }
             });
         };
     }(GDC__codemirror, GDC_utils_defineProperties, GDC_styles__styles, GDC_insertions__widgetInserter);

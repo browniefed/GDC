@@ -21,7 +21,8 @@ define(['GDC/insertions/comment',
 		}, 
 		getCreatedWidgets: function() {
 			return createdWidgets;
-		}
+		},
+		widgets: widgets
 	};
 
 });

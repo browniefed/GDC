@@ -4,7 +4,7 @@ define([], function() {
 
 	var ListOL = function() {
 		this.dom = document.createElement('span');
-		this.replace = '  %d.  ';
+		this.replace = '  %d. ';
 	}
 
 	ListOL.prototype.getDOM = function(currentLine, startOfList) {
@@ -13,8 +13,6 @@ define([], function() {
 	}
 	
 
-	return {
-		obj: ListOL,
-		SENTRY: '♀'
-	};
+	return ListOL;
+
 });
