@@ -8,3 +8,10 @@ These ideas aren't new and exist in one open source form or another. I'm just at
 Tables sort of work in that you can make them and type in them but not yet define how big they are or respond to the bolding or italics, or any other styles.
 
 Styles workish for now, still working on better detecting styles in a given selection and removing them at will.
+
+###Todo
+* Better style adding/removing
+* Fix list counts
+* Nested lists?
+* Enter continues list, if enter on blank list then delete
+* Other Google Docs interactions, just look at them and remake it
