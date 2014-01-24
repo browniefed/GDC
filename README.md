@@ -17,3 +17,4 @@ Styles workish for now, still working on better detecting styles in a given sele
 * Other Google Docs interactions, just look at them and remake it
 * Google doesn't handle some things well, a little awkward so make them better.
 
+
